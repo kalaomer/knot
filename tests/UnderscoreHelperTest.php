@@ -58,6 +58,15 @@ class UnderscoreHelperTest extends PHPUnit_Framework_TestCase {
 		], $obj->groupBy("class"));
 	}
 
+	/**
+	 * @dataProvider simpleObj
+	 */
+	Public function testTemplate($obj)
+	{
+		$name = "Jack";
+
+	}
+
 	Public function simpleObj()
 	{
 		return [
