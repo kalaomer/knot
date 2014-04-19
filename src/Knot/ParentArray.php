@@ -23,10 +23,6 @@ class ParentArray extends \Knot implements \Arrayaccess {
 	 * @var array
 	 */
 	Public static $array_funcs_1 = array(
-		"array_key_joiner",
-		"array_val_joiner",
-		"array_order_by",
-
 		"array_change_key_case",
 		"array_chunk",
 		"array_combine",
@@ -64,10 +60,6 @@ class ParentArray extends \Knot implements \Arrayaccess {
 	 * @var array
 	 */
 	Public static $array_funcs_2 = array(
-		"array_dump",
-		"array_get_by_dot",
-		"array_set_by_dot",
-
 		"array_column",
 		"array_count_values",
 		"array_keys",

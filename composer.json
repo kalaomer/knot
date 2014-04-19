@@ -8,8 +8,6 @@
         }
     ],
     "require": {
-        "kalaomer/main_interfaces" : "dev-master",
-        "kalaomer/basic_array_functions": "dev-master",
         "underscore/underscore.php": "dev-master"
     },
     "require-dev": {

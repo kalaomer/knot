@@ -12,7 +12,7 @@ class Knot {
 	CONST ARRAY_PATH_DELIMITER = ".";
 
 	/**
-	 * EasyArray Helpers.
+	 * Helpers.
 	 * @var array
 	 */
 	Public static $helpers = array(
