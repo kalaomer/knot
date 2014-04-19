@@ -5,19 +5,19 @@ require_once dirname(__DIR__) . "/vendor/autoload.php";
 class DataTest extends PHPUnit_Framework_TestCase
 {
 
-	Protected $objArray = [
+	Protected $objArray = array(
 		1,2,3,
-		"foo" => [
-			"sub" => [
+		"foo" => array(
+			"sub" => array(
 				"vuu" => "uuuuvvv"
-			],
+			),
 			"another" => "pff"
-		],
-		"my" => [
+		),
+		"my" => array(
 			"name", "is", "EasyArray!"
-		],
+		),
 		"string" => "info.."
-	];
+	);
 
 	/**
 	 * @dataProvider simpleObj
@@ -118,7 +118,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @dataProvider simpleObj
-	 * @expectedException \EasyArray\WrongArrayPathException
+	 * @expectedException \Knot\Exceptions\WrongArrayPathException
 	 */
 	Public function testOnlyGet($obj)
 	{
@@ -237,7 +237,6 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @dataProvider simpleObj
-	 * @param $obj \EasyArray\Father
 	 */
 	Public function testToArray($obj)
 	{
@@ -302,29 +301,29 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 	Public function simpleObj()
 	{
-		return [
-			[new Easyarray\Father($this->objArray, null, '')]
-		];
+		return array(
+			array(arr($this->objArray))
+		);
 	}
 
 	Public function simpleObjWithPatch()
 	{
-		return [
-			[
-				new Easyarray\Father($this->objArray, null, ''),
-				[
+		return array(
+			array(
+				arr($this->objArray),
+				array(
 					4,5,6,
-					"foo" => [
-						"sub" => [
+					"foo" => array(
+						"sub" => array(
 							"dipptt" => "ssss"
-						]
-					],
-					"your" => [
+						)
+					),
+					"your" => array(
 						"name", "is", "Sir!"
-					],
+					),
 					"string" => "new info"
-				]
-			]
-		];
+				)
+			)
+		);
 	}
 }

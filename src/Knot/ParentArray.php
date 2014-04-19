@@ -329,7 +329,7 @@ class ParentArray extends \Knot implements \Arrayaccess {
 
 		if(is_array($target_data))
 		{
-			return new Child($target_data, $this, $this->path());
+			return new ChildArray($target_data, $this, $this->path());
 		}
 
 		return $value;
