@@ -47,7 +47,15 @@ class UnderscoreHelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	Public function testGroupBy($obj)
 	{
-		$this->assertEquals($this->objArray[2], $obj->groupBy("class"));
+		$this->assertEquals([
+			"A" => [
+				$this->objArray[0]
+			],
+			"B" => [
+				$this->objArray[1],
+				$this->objArray[2]
+			]
+		], $obj->groupBy("class"));
 	}
 
 	Public function simpleObj()
