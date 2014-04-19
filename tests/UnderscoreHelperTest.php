@@ -69,9 +69,9 @@ class UnderscoreHelperTest extends PHPUnit_Framework_TestCase {
 
 	Public function simpleObj()
 	{
-		return [
-			[arr($this->objArray)]
-		];
+		return array(
+			array(arr($this->objArray))
+		);
 	}
 
 }
