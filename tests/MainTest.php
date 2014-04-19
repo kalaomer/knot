@@ -25,7 +25,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 	Public function testMagicGet($obj)
 	{
 		$this->assertEquals("info..", $obj->string);
-		$this->assertEquals(["name", "is", "EasyArray!"], $obj->my->toArray());
+		$this->assertEquals(array("name", "is", "EasyArray!"), $obj->my->toArray());
 	}
 
 	/**
@@ -106,13 +106,13 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals("nothing", $obj->get("foo.sub.vuu.ee","nothing"));
 
-		$this->assertEquals([1,2,3], $obj->get("foo.sub.vuu.new", [1,2,3])->toArray());
+		$this->assertEquals(array(1,2,3), $obj->get("foo.sub.vuu.new", array(1,2,3))->toArray());
 
         $this->assertEquals("name", $obj->get("my.0"));
 
-        $this->assertEquals([
+		$this->assertEquals(array(
             "name", "is", "EasyArray!"
-        ], $obj->get("my")->toArray());
+		), $obj->get("my")->toArray());
 
 	}
 
@@ -188,7 +188,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 	Public function testOffsetGet($obj)
 	{
 		$this->assertEquals('pff', $obj['foo']['another']);
-		$this->assertEquals(["vuu" => "uuuuvvv"], $obj['foo']['sub']);
+		$this->assertEquals(array("vuu" => "uuuuvvv"), $obj['foo']['sub']);
 	}
 
 	/**
@@ -199,8 +199,8 @@ class DataTest extends PHPUnit_Framework_TestCase
 		$obj['foo']['another'] = "new pff";
 		$this->assertEquals("new pff", $obj['foo']['another']);
 
-		$obj['new']['way'] = ["road 1", "road 2"];
-		$this->assertEquals(["road 1", "road 2"], $obj['new']['way']);
+		$obj['new']['way'] = array("road 1", "road 2");
+		$this->assertEquals(array("road 1", "road 2"), $obj['new']['way']);
 
 		$obj['new'][][] = 1;
 		$this->assertEquals(1, $obj['new'][0][0]);
@@ -261,7 +261,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(false, isset($obj->foo));
 
-		$this->assertEquals([], $child->toArray());
+		$this->assertEquals(array(), $child->toArray());
 
 		$child->new = "way";
 
@@ -283,7 +283,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(false, isset($obj["foo"]));
 
-		$this->assertEquals([], $child->toArray());
+		$this->assertEquals(array(), $child->toArray());
 	}
 
 	/**
