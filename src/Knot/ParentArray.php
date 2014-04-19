@@ -319,7 +319,7 @@ class ParentArray extends \Knot implements \Arrayaccess {
 			// Eğer yol yok ise veya yol var ama array değilse!
 			if (!isset($target_data[$path]) || !is_array($target_data[$path]))
 			{
-				$target_data[$path] = [];
+				$target_data[$path] = array();
 			}
 
 			$target_data =& $target_data[$path];
@@ -364,7 +364,7 @@ class ParentArray extends \Knot implements \Arrayaccess {
 	 */
 	Public function kill()
 	{
-		$this->data = [];
+		$this->data = array();
 	}
 
 	Public function path($add = null)

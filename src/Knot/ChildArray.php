@@ -10,7 +10,7 @@ class ChildArray extends ParentArray {
 	Public function kill()
 	{
 		$this->parent_array->del($this->path());
-		$this->data = [];
+		$this->data = array();
 	}
 
 }
