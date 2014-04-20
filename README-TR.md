@@ -195,7 +195,11 @@ Knot data'sını boş bir Array şekline dönüştürür.
 
 #### path()
 
-Knot eğer çocuk ise aile içindeki yolunu verir. Çocuk değilse buş değer dönecektir.
+Knot eğer çocuk ise aile içindeki yolunu verir. Çocuk değilse boş değer dönecektir.
+
+#### copy()
+
+Knot çocukları ile bağlarını korur, çocukta yapılan değişiklik Knot Parent üzerinde değişiklik oluşturur. Bu bağdan kurtulmak için ```copy``` fonksiyonu kullanılır. Çıktısı parent ile bağı bulunmayan Knot nesnesi olur.
 
 
 ### PHP Array fonksiyonları

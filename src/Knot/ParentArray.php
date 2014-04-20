@@ -390,7 +390,8 @@ class ParentArray extends \Knot implements \Arrayaccess {
 
 	Public function copy()
 	{
-		return clone $this;
+		$_data = $this->data;
+		return new self($_data, null, '');
 	}
 
 	/* =============================================================================================================

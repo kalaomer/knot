@@ -279,6 +279,8 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals("goo!", $obj->foo->new->way);
 
+	//	var_dump($child->toArray(),$obj->toArray());
+
 		$child->kill();
 
 		$this->assertEquals(false, isset($obj["foo"]));
@@ -291,11 +293,13 @@ class DataTest extends PHPUnit_Framework_TestCase
 	 */
 	Public function testFatherCloneRelationship($obj)
 	{
-		$clone = $obj->foo;
+		$clone = $obj->foo->copy();
 
 		$clone->set("new.way", "goo!");
 
-		$this->assertEquals(false, $obj->is_path("new.way"));
+		var_dump($clone->toArray(),$obj->toArray());
+
+		$this->assertEquals(false, $obj->is_path("foo.new.way"));
 	}
 
 
