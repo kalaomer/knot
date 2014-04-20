@@ -4,6 +4,8 @@
 
 Knot is a very powerful tool for array. Knot makes use arrays like objects! Knot examples will be added!
 
+## [Türkçe klavuz için tıklayınız](./README-TR.md)
+
 ## Last
 
 PHP 5.3 not supported yet, but this will be fixed!

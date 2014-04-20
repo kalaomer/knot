@@ -365,4 +365,8 @@ PHPunit ve Travis yardımı ile testler yapılmaktadır. Ek olarak test ekleyebi
 
 ## Son olarak
 
+PHP 5.4 ve üzeri versiyonlarda kullanılmaktadır. 5.3 için düzenleme ileride gelebilir. Ayrıca HHVM üzerinde de test edilmiştir.
+
+Testlerin takibi için [Travis](https://travis-ci.org/kalaomer/knot) kullanılmaktadır.
+
 İletişim için kalaomer@hotmail.com
