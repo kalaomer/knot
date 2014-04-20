@@ -1,6 +1,8 @@
 # Knot
 
-[![Build Status](https://travis-ci.org/kalaomer/knot.svg?branch=master)](https://travis-ci.org/kalaomer/knot) [![Dependency Status](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5/badge.png)](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5)
+[![Build Status](https://travis-ci.org/kalaomer/knot.svg?branch=master)](https://travis-ci.org/kalaomer/knot)
+[![Dependency Status](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5/badge.png)](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5)
+[![Latest Version](http://img.shields.io/github/tag/laravel/framework.svg)](https://github.com/kalaomer/knot/releases)
 
 Knot güçlü bir PHP Array aracıdır. Array'ları nesne gibi kullanım imkanı vermektedir. Ek olarak zengin fonksiyonları vardır.
 
@@ -16,6 +18,8 @@ $obj->toArray();
 ```
 
 Burada ilk başta $obj için bir tane Knot oluşturuldu ve Knot datasına ```array(1,2,3)``` değeri verildi. Daha sonra bu $obj datası ```array(3,3,4,5,6,7)``` ile birleştirildi. Ardından $obj datasındaki benzer değerler çılarıldı. Sonraki satırda data içinde child ifadesi açılarak değeri ```array("a", "b", "c")``` arrayına eşitlendi. Son satırda $obj'nin datası Array şeklinde alındı.
+
+Knot kod standartları olarak [PSR-0](http://www.php-fig.org/psr/psr-0/) ve [PSR-1](http://www.php-fig.org/psr/psr-1/)'e göre hazırlanmıştır.
 
 ## Yükleme
 
@@ -185,9 +189,13 @@ Ek olarak yol'un hedefi Array ise, Knot otomatik olarak hedefi çocuk Knot yapar
 
 ```get``` fonksiyonunun yol mantığını kullanır. Amacı yol'da belirtilen yeri silmektir.
 
-#### only_get($path, [$default_value])
+#### getOnly($path, [$default_value])
 
 ```get``` fonksiyonunun yol mantığını kullanır. ```get``` fonksiyonundan farklı olarak, eğer belirtilen yol aktif değil ise varsayılan değeri belirtilen yola eşitlemez. Sadece varsayılan değeri döndürür.
+
+#### isPath($path)
+
+Gönderilen yolun aktif olup olmadığını bildirir.
 
 #### kill()
 
@@ -209,7 +217,7 @@ Knot data'sındaki eleman sayısını döndürür. Ek olarak [Countable](http://
 
 Knot, fonksiyonlar için hazırda bulunan PHP'nin Array fonksiyonlarını temel alır. Bunu yaparken sınıflandırma kullanılmıştır. Bunun nedeni bu fonksiyonların argüman girişlerinin ve çıkış değelerinin farklı olmasıdır.
 
-PHP fonksiyonları Knot yapısında ```array_``` ekli olmadan çağrılır. Örneğin ```array_merge``` fonksiyonu Knot içinde ```merge``` olarak geçmektedir.
+PHP fonksiyonları Knot yapısında ```array_``` ekli olmadan ve ```_``` ifadesinden sonraki harfleri büyük şekilde başlayacak şekilde kullanır. Bunun nedeni PSR-1 standartlarını uygulamak ve aynı zamanda ```array_``` ekinden kurtulmaktır. Örneğin ```array_merge``` fonksiyonu Knot içinde ```merge``` olarak geçmektedir. ```array_merge_recursive``` fonksiyonu ```mergeRecursive``` şeklinde çağrılır.
 
 #### 1. sınıf fonksiyonlar
 

@@ -51,5 +51,12 @@ class PHPArrayFunctionsTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array_unique($array), $obj->toArray());
 	}
+
+	Public function testArrayMergeRecursive()
+	{
+		$obj = ar();
+
+		$this->assertEquals(array_merge_recursive(array(1,2,3), array(3,4,5)), $obj->mergeRecursive(array(1,2,3), array(3,4,5))->toArray());
+	}
 }
  

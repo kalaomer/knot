@@ -126,7 +126,15 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 */
 	Public function __call($method, $arguments = array())
 	{
-		$array_method = 'array_' . $method;
+
+		// Return PSR-1 function name to PHP Array function name.
+		$array_method = 'array_' . preg_replace_callback(
+				'/[A-Z]/',
+				function($matches)
+				{
+					return '_' . strtolower($matches[0]);
+				},
+				$method);
 
 		if (in_array($array_method, self::$array_funcs_1))
 		{
@@ -142,7 +150,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		}
 
 		// If Callable Data in there, use it!
-		if ($this->is_key($method) && is_callable($f = $this->data[$method]))
+		if ($this->keyExists($method) && is_callable($f = $this->data[$method]))
 		{
 			$_data = array(&$this->data);
 
@@ -190,7 +198,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 * @param mixed $key
 	 * @return bool|false|true
 	 */
-	Public function is_key($key)
+	Public function keyExists($key)
 	{
 		return isset($this->data[$key]);
 	}
@@ -199,7 +207,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 * @param $path
 	 * @return bool
 	 */
-	Public function is_path($path)
+	Public function isPath($path)
 	{
 		try
 		{
@@ -219,7 +227,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 * @return Mixed
 	 * @throws Exceptions\WrongArrayPathException
 	 */
-	Public function only_get($path)
+	Public function getOnly($path)
 	{
 		$arguments = func_get_args();
 
@@ -377,7 +385,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		return implode(self::ARRAY_PATH_DELIMITER, $path);
 	}
 
-	Public function last_key()
+	Public function lastKey()
 	{
 		end( $this->data );
 		return key( $this->data );

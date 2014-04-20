@@ -28,12 +28,12 @@ interface Helper {
 	 * @param $function_name string
 	 * @return bool
 	 */
-	Public function is_function($function_name);
+	Public function isFunction($function_name);
 
 	/**
 	 * Helper is ready?
 	 *
 	 * @return bool
 	 */
-	Public function is_ready();
+	Public function isReady();
 } 

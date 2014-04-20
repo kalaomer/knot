@@ -15,14 +15,14 @@ class HelperManager {
 
 	Public function __construct()
 	{
-		$this->load_helpers(\Knot::$helpers);
+		$this->loadHelpers(\Knot::$helpers);
 	}
 
-	Public function load_helpers($helper_list)
+	Public function loadHelpers($helper_list)
 	{
 		foreach($helper_list as $helper_name)
 		{
-			if(!$this->is_helper($helper_name))
+			if(!$this->isHelper($helper_name))
 			{
 				$helper_address = 'Knot\\Helpers\\' . $helper_name;
 				$this->helpers[$helper_name] = new $helper_address;
@@ -32,7 +32,7 @@ class HelperManager {
 
 	Public function execute($function_name, $data, $arguments)
 	{
-		$target_helper = $this->is_function($function_name);
+		$target_helper = $this->isFunction($function_name);
 
 		if($target_helper == false)
 		{
@@ -42,11 +42,11 @@ class HelperManager {
 		return $target_helper->run($function_name, $data, $arguments);
 	}
 
-	Public function is_function($function_name)
+	Public function isFunction($function_name)
 	{
 		foreach($this->helpers as $helper)
 		{
-			if ($helper->is_function($function_name))
+			if ($helper->isFunction($function_name))
 			{
 				return $helper;
 			}
@@ -55,7 +55,7 @@ class HelperManager {
 		return false;
 	}
 
-	Public function is_helper($helper_name)
+	Public function isHelper($helper_name)
 	{
 		return isset($this->helpers[$helper_name]);
 	}

@@ -21,7 +21,7 @@ class UnderscoreHelper implements Helper {
 		}
 	}
 
-	Public function is_ready()
+	Public function isReady()
 	{
 		return $this->ready;
 	}
@@ -33,7 +33,7 @@ class UnderscoreHelper implements Helper {
 		return call_user_func_array(array($underscore, $function_name), $arguments);
 	}
 
-	Public function is_function($function_name)
+	Public function isFunction($function_name)
 	{
 		if(method_exists("__", $function_name))
 		{

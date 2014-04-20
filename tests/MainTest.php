@@ -14,7 +14,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 			"another" => "pff"
 		),
 		"my" => array(
-			"name", "is", "EasyArray!"
+			"name", "is", "Knot!"
 		),
 		"string" => "info.."
 	);
@@ -25,7 +25,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 	Public function testMagicGet($obj)
 	{
 		$this->assertEquals("info..", $obj->string);
-		$this->assertEquals(array("name", "is", "EasyArray!"), $obj->my->toArray());
+		$this->assertEquals(array("name", "is", "Knot!"), $obj->my->toArray());
 	}
 
 	/**
@@ -78,7 +78,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$newArray = array_merge_recursive($array, $patch);
 
-		$obj->merge_recursive($patch);
+		$obj->mergeRecursive($patch);
 
 		$this->assertEquals($newArray, $obj->toArray());
 	}
@@ -111,7 +111,7 @@ class DataTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("name", $obj->get("my.0"));
 
 		$this->assertEquals(array(
-            "name", "is", "EasyArray!"
+            "name", "is", "Knot!"
 		), $obj->get("my")->toArray());
 
 	}
@@ -122,14 +122,14 @@ class DataTest extends PHPUnit_Framework_TestCase
 	 */
 	Public function testOnlyGet($obj)
 	{
-		$this->assertEquals("info..", $obj->only_get("string"));
+		$this->assertEquals("info..", $obj->getOnly("string"));
 
-		$this->assertEquals("Nothing", $obj->only_get("foo.string.bla-bla", "Nothing"));
+		$this->assertEquals("Nothing", $obj->getOnly("foo.string.bla-bla", "Nothing"));
 
-		$this->assertEquals("Nothing", $obj->only_get("foo.string.bla-bla", "Nothing"));
+		$this->assertEquals("Nothing", $obj->getOnly("foo.string.bla-bla", "Nothing"));
 
 		// Exception HERE!
-		$this->assertEquals("Nothing", $obj->only_get("foo.string.bla-bla"));
+		$this->assertEquals("Nothing", $obj->getOnly("foo.string.bla-bla"));
 	}
 
 	/**
@@ -161,11 +161,11 @@ class DataTest extends PHPUnit_Framework_TestCase
 	 */
 	Public function testIsPath($obj)
 	{
-		$this->assertEquals(true, $obj->is_path("foo.sub"));
+		$this->assertEquals(true, $obj->isPath("foo.sub"));
 
-		$this->assertEquals(false, $obj->is_path("foo.sub.aa.bb"));
+		$this->assertEquals(false, $obj->isPath("foo.sub.aa.bb"));
 
-		$this->assertEquals(true, $obj->is_path("string"));
+		$this->assertEquals(true, $obj->isPath("string"));
 	}
 
 	/**
@@ -175,11 +175,11 @@ class DataTest extends PHPUnit_Framework_TestCase
 	{
 		$obj->del("foo.sub");
 
-		$this->assertEquals(false, $obj->is_path("foo.sub"));
+		$this->assertEquals(false, $obj->isPath("foo.sub"));
 
 		$obj->del("string");
 
-		$this->assertEquals(false, $obj->is_path("string"));
+		$this->assertEquals(false, $obj->isPath("string"));
 	}
 
 	/**
@@ -303,7 +303,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$clone->set("new.way", "goo!");
 
-		$this->assertEquals(false, $obj->is_path("foo.new.way"));
+		$this->assertEquals(false, $obj->isPath("foo.new.way"));
 	}
 
 	Public function simpleObj()

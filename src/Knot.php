@@ -30,7 +30,7 @@ class Knot {
 		self::$helper_manager = new Knot\HelperManager();
 	}
 
-	Public static function create_by_reference(&$data)
+	Public static function createByReference(&$data)
 	{
 		return new \Knot\ParentArray($data, null, '');
 	}

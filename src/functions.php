@@ -22,5 +22,5 @@ function arr(array $array)
 
 function arr_ref(&$array)
 {
-	return Knot::create_by_reference($array, null, '');
+	return Knot::createByReference($array, null, '');
 }
