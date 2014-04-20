@@ -20,7 +20,7 @@ function arr(array $array)
 	return Knot::create($array, null, '');
 }
 
-function arr_ref(&$array)
+function arrRef(&$array)
 {
 	return Knot::createByReference($array, null, '');
 }

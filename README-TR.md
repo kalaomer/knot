@@ -63,7 +63,7 @@ $obj = arr(array(1,2,3,'a'=>4));
 $obj->toArray();
 ```
 
-### arr_ref(&$array)
+### arrRef(&$array)
 
 Bu fonksiyon arr() fonksiyonuna ek olarak referansı alınması istenen değeri Knot nesnesine yollar. Böylece argümana yollanan array ile Knot datası aynı değeri temsil eder.
 
