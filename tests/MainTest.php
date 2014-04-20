@@ -271,6 +271,14 @@ class DataTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider simpleObj
 	 */
+	Public function testCount($obj)
+	{
+		$this->assertEquals(count($obj->toArray()), count($obj));
+	}
+
+	/**
+	 * @dataProvider simpleObj
+	 */
 	Public function testFatherChildRelationship($obj)
 	{
 		$child = $obj->foo;
@@ -278,8 +286,6 @@ class DataTest extends PHPUnit_Framework_TestCase
 		$child->set("new.way", "goo!");
 
 		$this->assertEquals("goo!", $obj->foo->new->way);
-
-	//	var_dump($child->toArray(),$obj->toArray());
 
 		$child->kill();
 
@@ -297,11 +303,8 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$clone->set("new.way", "goo!");
 
-		var_dump($clone->toArray(),$obj->toArray());
-
 		$this->assertEquals(false, $obj->is_path("foo.new.way"));
 	}
-
 
 	Public function simpleObj()
 	{

@@ -4,7 +4,7 @@
  */
 namespace Knot;
 
-class ParentArray extends \Knot implements \Arrayaccess {
+class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 	/**
 	 * İçeriğin tutulduğu yer.
@@ -443,5 +443,14 @@ class ParentArray extends \Knot implements \Arrayaccess {
 	Public function offsetUnset( $offset )
 	{
 		$this->__unset($offset);
+	}
+
+	/* =============================================================================================================
+	 * =============================================================================================================
+	 * Countable Interface.
+	 */
+	Public function count()
+	{
+		return count($this->data);
 	}
 }

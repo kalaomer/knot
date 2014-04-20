@@ -201,6 +201,9 @@ Knot eğer çocuk ise aile içindeki yolunu verir. Çocuk değilse boş değer d
 
 Knot çocukları ile bağlarını korur, çocukta yapılan değişiklik Knot Parent üzerinde değişiklik oluşturur. Bu bağdan kurtulmak için ```copy``` fonksiyonu kullanılır. Çıktısı parent ile bağı bulunmayan Knot nesnesi olur.
 
+#### count()
+
+Knot data'sındaki eleman sayısını döndürür. Ek olarak [Countable](http://www.php.net/manual/en/class.countable.php) arayüzü ile PHP'nin ```count()``` fonksiyonu yardımı ile aynı işlem yapılabilir.
 
 ### PHP Array fonksiyonları
 
