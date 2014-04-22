@@ -7,12 +7,19 @@ namespace Knot;
 class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 	/**
-	 * İçeriğin tutulduğu yer.
+	 * Knot data.
+	 * @var array
 	 */
 	Protected $data;
 
+	/**
+	 * @var self
+	 */
 	Protected $parent_array;
 
+	/**
+	 * @var string
+	 */
 	Protected $path = '';
 
 	/**
@@ -80,7 +87,12 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		"array_walk"
 	);
 
-	Public function __construct(&$data, $father, $path)
+	/**
+	 * @param array $data
+	 * @param $father
+	 * @param $path
+	 */
+	Public function __construct(array &$data, $father, $path)
 	{
 		$this->data =& $data;
 		$this->path = $path;
@@ -93,8 +105,8 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	}
 
 	/**
-	 * @param mixed $key
-	 * @return \Knot\ChildArray
+	 * @param string|int $key
+	 * @return mixed|\Knot\ChildArray
 	 * @throws \Exception
 	 */
 	Public function &__get($key)
@@ -105,7 +117,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 			if (is_array($target))
 			{
-				$r = new ChildArray($target, $this, $this->path($key));
+				$r = new ChildArray($target, $this->childParent(), $this->path($key));
 				return $r;
 			}
 
@@ -119,9 +131,9 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 	/**
 	 * Function list: PHP array functions + Callable Data + Helper Libraries!
-	 * @param $method
+	 * @param string $method
 	 * @param array $arguments
-	 * @return $this|bool|mixed
+	 * @return $this|mixed
 	 * @throws \Exception
 	 */
 	Public function __call($method, $arguments = array())
@@ -173,11 +185,18 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 	}
 
+	/**
+	 * @param mixed $key
+	 * @return bool
+	 */
 	Public function __isset($key)
 	{
 		return isset($this->data[$key]);
 	}
 
+	/**
+	 * @param mixed $key
+	 */
 	Public function __unset($key)
 	{
 		unset($this->data[$key]);
@@ -191,6 +210,15 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	Public function __invoke($path)
 	{
 		return call_user_func_array(array($this, 'get'), func_get_args());
+	}
+
+	/**
+	 * In ParentArray's child's parent is self.
+	 * @return $this
+	 */
+	Protected function childParent()
+	{
+		return $this;
 	}
 
 	/**
@@ -279,7 +307,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 					if (is_array($default_return))
 					{
-						$r = new ChildArray($default_return, $this, $path);
+						$r = new ChildArray($default_return, $this->childParent(), $path);
 						return $r;
 					}
 					
@@ -298,7 +326,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		// Eğer hedef Array ise ve çıktı türü otomatikse, Knot çocuğu olarak dön!
 		if (is_array($target_data))
 		{
-			$r = new ChildArray($target_data, $this, $path);
+			$r = new ChildArray($target_data, $this->childParent(), $path);
 			return $r;
 		}
 
@@ -308,7 +336,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	/**
 	 * @param $rawPath
 	 * @param $value
-	 * @return Mixed|\Knot\Child
+	 * @return Mixed|\Knot\ChildArray
 	 */
 	Public function set($rawPath, $value)
 	{
@@ -329,12 +357,16 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 		if(is_array($target_data))
 		{
-			return new ChildArray($target_data, $this, $this->path());
+			return new ChildArray($target_data, $this->childParent(), $this->path());
 		}
 
 		return $value;
 	}
 
+	/**
+	 * @param $rawPath
+	 * @return $this
+	 */
 	Public function del($rawPath)
 	{
 		$target_data =& $this->data;
@@ -347,7 +379,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		{
 			// Eğer yol yok ise veya yol var ama array değilse!
 			if (!isset($target_data[$path]) || !is_array($target_data[$path]))
-				return;
+				return $this;
 
 			$target_data =& $target_data[$path];
 		}
@@ -356,17 +388,24 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		{
 			unset($target_data[$target_key]);
 		}
+
+		return $this;
 	}
 
 	/**
 	 * Reset data!
-	 * @return void
+	 * @return $this
 	 */
 	Public function kill()
 	{
 		$this->data = array();
+		return $this;
 	}
 
+	/**
+	 * @param null $add
+	 * @return null|string
+	 */
 	Public function path($add = null)
 	{
 		return $add ?
@@ -375,22 +414,36 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 			$this->path;
 	}
 
+	/**
+	 * @param $path
+	 * @return array
+	 */
 	Public static function pathParser($path)
 	{
 		return explode(self::ARRAY_PATH_DELIMITER, $path);
 	}
 
+	/**
+	 * @param array $path
+	 * @return string
+	 */
 	Public static function pathCombiner(array $path)
 	{
 		return implode(self::ARRAY_PATH_DELIMITER, $path);
 	}
 
+	/**
+	 * @return int|string
+	 */
 	Public function lastKey()
 	{
 		end( $this->data );
 		return key( $this->data );
 	}
 
+	/**
+	 * @return array
+	 */
 	Public function &toArray()
 	{
 		return $this->data;
@@ -456,6 +509,10 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	/* =============================================================================================================
 	 * =============================================================================================================
 	 * Countable Interface.
+	 */
+
+	/**
+	 * @return int
 	 */
 	Public function count()
 	{

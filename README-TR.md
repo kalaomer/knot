@@ -370,6 +370,35 @@ $obj = arr(array(
 $obj->groupBy("class");
 ```
 
+## Knot Çocuk olayları
+
+Knot, yapısında aile-çocuk ilişkisi bulundurur. Bu sayede çocuk Knot üzerinden rahatça aileye geçilip orada diğer çocuklara bağlanılabilir.
+
+### parent()
+
+Knot ailesini döndürür.
+
+Örnek:
+```
+$parent = ar();
+
+$parent["child"] = array(
+    "new" => array(
+        "way" => array("foo")
+    )
+);
+
+$child = $parent->child;
+
+// $parent nesnesini dönecektir.
+$_parent = $child->parent();
+
+$new = $child->new;
+
+// $parent nesnesini dönecektir.
+$_parent = $new->parent();
+```
+
 ## Testler
 
 PHPunit ve Travis yardımı ile testler yapılmaktadır. Ek olarak test ekleyebilirsiniz(!)
