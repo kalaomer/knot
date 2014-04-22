@@ -1,10 +1,11 @@
 # Knot
 
-## [Türkçe klavuz için tıklayınız](./README-TR.md)
-
 [![Build Status](https://travis-ci.org/kalaomer/knot.svg?branch=master)](https://travis-ci.org/kalaomer/knot)
 [![Dependency Status](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5/badge.png)](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5)
 [![Latest Version](http://img.shields.io/github/tag/kalaomer/knot.svg)](https://github.com/kalaomer/knot/releases)
+
+## Other README Files
+- [Türkçe Kılavuz](./README-TR.md)
 
 Knot is a very powerful tool for array. Knot help for using arrays like objects! And Knot have very rich function library.
 
@@ -36,7 +37,7 @@ Knot is available for Composer.
 
 Or download from [Github](https://github.com/kalaomer/knot/archive/master.zip).
 
-## Starting
+## Startup
 
 This is three ways for creating Knot object with easy way.
 
