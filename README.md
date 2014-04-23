@@ -24,7 +24,7 @@ In this example, first Knot created and Knot's data have ```array(1,2,3)``` for 
 
 Knot is prepared with [PSR-0](http://www.php-fig.org/psr/psr-0/) and [PSR-1](http://www.php-fig.org/psr/psr-1/) standards.
 
-## Installing
+## Install
 
 Knot is available for Composer.
 ```

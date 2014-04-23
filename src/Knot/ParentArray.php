@@ -4,6 +4,8 @@
  */
 namespace Knot;
 
+use SebastianBergmann\Exporter\Exception;
+
 class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 	/**
@@ -111,21 +113,94 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 */
 	Public function &__get($key)
 	{
-		try
-		{
+		try	{
 			$target =& $this->data[$key];
 
-			if (is_array($target))
-			{
+			if (is_array($target)) {
 				$r = new ChildArray($target, $this->childParent(), $this->path($key));
 				return $r;
 			}
 
 			return $target;
 		}
-		catch(\Exception $e)
-		{
+		catch(\Exception $e) {
 			throw $e;	
+		}
+	}
+
+	/**
+	 * @param $method
+	 * @param $arguments
+	 * @return mixed|$this
+	 * @throws \Exception
+	 */
+	Protected function callPHPArrayFunction($method, $arguments)
+	{
+		$array_method = $this->convertMethodToPHPFunctionName($method);
+
+		if (in_array($array_method, self::$array_funcs_1))
+		{
+			array_unshift($arguments, $this->data);
+			$this->data = call_user_func_array($array_method, $arguments);
+			return $this;
+		}
+
+		if (in_array($array_method, self::$array_funcs_2))
+		{
+			return call_user_func_array($array_method, array_merge(array(&$this->data), $arguments));
+		}
+
+		throw new \Exception("Wrong function name!");
+	}
+
+	/**
+	 * Return PSR-1 function name to PHP Array function name.
+	 * @param $method
+	 * @return string
+	 */
+	Protected function convertMethodToPHPFunctionName($method)
+	{
+		return 'array_' . preg_replace_callback(
+				'/[A-Z]/',
+				function($matches) {
+					return '_' . strtolower($matches[0]);
+				},
+				$method);
+	}
+
+	/**
+	 * @param $method
+	 * @param $arguments
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	Private function callDataFunction($method, $arguments)
+	{
+		if (!$this->keyExists($method) || !is_callable($f = $this->data[$method])) {
+			throw new \Exception("Wrong function name!");
+		}
+
+		try {
+			return call_user_func_array($this->data[$method], array_merge(array(&$this->data), $arguments));
+		}
+		catch(\Exception $e) {
+			throw $e;
+		}
+	}
+
+	/**
+	 * @param $method
+	 * @param $arguments
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	Private function callHelperFunction($method, $arguments)
+	{
+		try{
+			return \Knot::$helper_manager->execute($method, $this->data, $arguments);
+		}
+		catch(\Exception $e) {
+			throw $e;
 		}
 	}
 
@@ -139,47 +214,20 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	Public function __call($method, $arguments = array())
 	{
 
-		// Return PSR-1 function name to PHP Array function name.
-		$array_method = 'array_' . preg_replace_callback(
-				'/[A-Z]/',
-				function($matches)
-				{
-					return '_' . strtolower($matches[0]);
-				},
-				$method);
-
-		if (in_array($array_method, self::$array_funcs_1))
-		{
-			array_unshift($arguments, $this->data);
-			$this->data = call_user_func_array($array_method, $arguments);
-			return $this;
+		try {
+			return $this->callPHPArrayFunction($method, $arguments);
 		}
+		catch(\Exception $e) {}
 
-		if (in_array($array_method, self::$array_funcs_2))
-		{
-			$_data = array(&$this->data);
-			return call_user_func_array($array_method, array_merge($_data, $arguments));
+		try {
+			return $this->callDataFunction($method, $arguments);
 		}
-
-		// If Callable Data in there, use it!
-		if ($this->keyExists($method) && is_callable($f = $this->data[$method]))
-		{
-			$_data = array(&$this->data);
-
-			try {
-				return call_user_func_array($f, array_merge($_data, $arguments));
-			}
-			catch(\Exception $e)
-			{
-				throw $e;
-			}
-		}
+		catch(\Exception $e) {}
 
 		try{
-			return \Knot::$helper_manager->execute($method, $this->data, $arguments);
+			return $this->callHelperFunction($method, $arguments);
 		}
-		catch(\Exception $e)
-		{
+		catch(\Exception $e) {
 			throw $e;
 		}
 
@@ -237,13 +285,11 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 */
 	Public function isPath($path)
 	{
-		try
-		{
+		try	{
 			$this->get($path);
 			return true;
 		}
-		catch(Exceptions\WrongArrayPathException $e)
-		{
+		catch(Exceptions\WrongArrayPathException $e) {
 			return false;
 		}
 	}
@@ -259,17 +305,12 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	{
 		$arguments = func_get_args();
 
-		if (isset($arguments[1]))
-		{
-			$default_return = $arguments[1];
-		}
+		isset($arguments[1]) && $default_return = $arguments[1];
 
-		try
-		{
+		try	{
 			return $this->get($path);
 		}
-		catch(Exceptions\WrongArrayPathException $e)
-		{
+		catch(Exceptions\WrongArrayPathException $e) {
 			if (isset($default_return))
 				return $default_return;
 
@@ -285,47 +326,28 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 */
 	Public function &get($path)
 	{
-
 		$arguments = func_get_args();
 
-		if (isset($arguments[1]))
-		{
-			$default_return = $arguments[1];
-		}
+		isset($arguments[1]) && $default_return = $arguments[1];
 
-		//	Hedef olarak ile data'yı seç.
 		$target_data = &$this->data;
 
-		foreach (self::pathParser($path) as $way)
-		{
-			if (!isset($target_data[$way]))
-			{
-				if ( isset($default_return) )
-				{
+		foreach (self::pathParser($path) as $way) {
 
-					$this->set($path, $default_return);
+			if (!isset($target_data[$way]))	{
 
-					if (is_array($default_return))
-					{
-						$r = new ChildArray($default_return, $this->childParent(), $path);
-						return $r;
-					}
-					
-					return $default_return;
+				if ( isset($default_return) ) {
+					$r = $this->set($path, $default_return);
+					return $r;
 				}
-				//	default basılması isstenmiyorsa ise..
-				else
-				{
-					throw new Exceptions\WrongArrayPathException('Path can\'t find! Path:' . $path);
-				}
+
+				throw new Exceptions\WrongArrayPathException('Path can\'t find! Path:' . $path);
 			}
 
 			$target_data = &$target_data[$way];
 		}
 
-		// Eğer hedef Array ise ve çıktı türü otomatikse, Knot çocuğu olarak dön!
-		if (is_array($target_data))
-		{
+		if (is_array($target_data))	{
 			$r = new ChildArray($target_data, $this->childParent(), $path);
 			return $r;
 		}
@@ -342,8 +364,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	{
 		$target_data =& $this->data;
 
-		foreach (self::pathParser($rawPath) as $path)
-		{
+		foreach (self::pathParser($rawPath) as $path) {
 			// Eğer yol yok ise veya yol var ama array değilse!
 			if (!isset($target_data[$path]) || !is_array($target_data[$path]))
 			{
@@ -375,8 +396,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 		$target_key = array_pop($paths);
 
-		foreach ($paths as $path)
-		{
+		foreach ($paths as $path) {
 			// Eğer yol yok ise veya yol var ama array değilse!
 			if (!isset($target_data[$path]) || !is_array($target_data[$path]))
 				return $this;
@@ -384,8 +404,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 			$target_data =& $target_data[$path];
 		}
 
-		if (isset($target_data[$target_key]))
-		{
+		if (isset($target_data[$target_key])) {
 			unset($target_data[$target_key]);
 		}
 
@@ -487,12 +506,10 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	*/
 	Public function offsetSet( $offset,  $value )
 	{
-		if ( is_null( $offset ) )
-		{
+		if ( is_null( $offset ) ) {
 			$this->data[]= $value;
 		}
-		else
-		{
+		else {
 			$this->data[$offset] = $value;
 		}
 	}
