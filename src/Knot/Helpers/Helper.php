@@ -18,9 +18,10 @@ interface Helper {
 	 * @param $function_name string
 	 * @param $data array
 	 * @param $arguments array
+	 * @param $knot \Knot\ParentArray
 	 * @return mixed
 	 */
-	Public function run($function_name, $data, $arguments);
+	Public function run($function_name, $arguments, $knot);
 
 	/**
 	 * Is this function?

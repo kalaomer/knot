@@ -1,11 +1,13 @@
 <?php
+
+namespace Knot;
+
+use \Knot\Exceptions\WrongFunctionException;
+use \Knot\Exceptions\WrongArrayPathException;
+
 /*
  * Main Knot class.
  */
-namespace Knot;
-
-use SebastianBergmann\Exporter\Exception;
-
 class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 	/**
@@ -23,71 +25,6 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 * @var string
 	 */
 	Protected $path = '';
-
-	/**
-	 * Çıktılarının içeriğe eşitlendiği fonksiyonlar.
-	 * Örnek şablon: func( $data, ... );
-	 * $data = func(...)
-	 * return Knot( $data )
-	 * @var array
-	 */
-	Public static $array_funcs_1 = array(
-		"array_change_key_case",
-		"array_chunk",
-		"array_combine",
-		"array_diff_assoc",
-		"array_diff_key",
-		"array_diff_uassoc",
-		"array_diff_ukey",
-		"array_diff",
-		"array_fill_keys",
-		"array_filter",
-		"array_flip",
-		"array_intersect_assoc",
-		"array_intersect_key",
-		"array_intersect_uassoc",
-		"array_intersect_ukey",
-		"array_intersect",
-		"array_merge_recursive",
-		"array_merge",
-		"array_pad",
-		"array_reverse",
-		"array_slice",
-		"array_udiff_assoc",
-		"array_udiff_uassoc",
-		"array_udiff",
-		"array_uintersect_assoc",
-		"array_uintersect_uassoc",
-		"array_uintersect",
-		"array_unique"
-	);
-
-	/**
-	 * Örnek şablon: func( &$data, ... );
-	 * $data != func(...)
-	 * return func(...)
-	 * @var array
-	 */
-	Public static $array_funcs_2 = array(
-		"array_column",
-		"array_count_values",
-		"array_keys",
-		"array_multisort",
-		"array_pop",
-		"array_product",
-		"array_push",
-		"array_rand",
-		"array_reduce",
-		"array_replace_recursive",
-		"array_replace",
-		"array_shift",
-		"array_splice",
-		"array_sum",
-		"array_unshift",
-		"array_values",
-		"array_walk_recursive",
-		"array_walk"
-	);
 
 	/**
 	 * @param array $data
@@ -131,53 +68,13 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	/**
 	 * @param $method
 	 * @param $arguments
-	 * @return mixed|$this
-	 * @throws \Exception
-	 */
-	Protected function callPHPArrayFunction($method, $arguments)
-	{
-		$array_method = $this->convertMethodToPHPFunctionName($method);
-
-		if (in_array($array_method, self::$array_funcs_1))
-		{
-			array_unshift($arguments, $this->data);
-			$this->data = call_user_func_array($array_method, $arguments);
-			return $this;
-		}
-
-		if (in_array($array_method, self::$array_funcs_2))
-		{
-			return call_user_func_array($array_method, array_merge(array(&$this->data), $arguments));
-		}
-
-		throw new \Exception("Wrong function name!");
-	}
-
-	/**
-	 * Return PSR-1 function name to PHP Array function name.
-	 * @param $method
-	 * @return string
-	 */
-	Protected function convertMethodToPHPFunctionName($method)
-	{
-		return 'array_' . preg_replace_callback(
-				'/[A-Z]/',
-				function($matches) {
-					return '_' . strtolower($matches[0]);
-				},
-				$method);
-	}
-
-	/**
-	 * @param $method
-	 * @param $arguments
 	 * @return mixed
 	 * @throws \Exception
 	 */
 	Private function callDataFunction($method, $arguments)
 	{
 		if (!$this->keyExists($method) || !is_callable($f = $this->data[$method])) {
-			throw new \Exception("Wrong function name!");
+			throw new WrongFunctionException("Wrong function name!");
 		}
 
 		try {
@@ -197,7 +94,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	Private function callHelperFunction($method, $arguments)
 	{
 		try{
-			return \Knot::$helper_manager->execute($method, $this->data, $arguments);
+			return \Knot::$helper_manager->execute($method, $arguments, $this);
 		}
 		catch(\Exception $e) {
 			throw $e;
@@ -205,25 +102,25 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	}
 
 	/**
-	 * Function list: PHP array functions + Callable Data + Helper Libraries!
+	 * Function list: Callable Data + Helper Libraries!
 	 * @param string $method
 	 * @param array $arguments
 	 * @return $this|mixed
-	 * @throws \Exception
+	 * @throws \Exception|WrongFunctionException
 	 */
 	Public function __call($method, $arguments = array())
 	{
 
-		try {
-			return $this->callPHPArrayFunction($method, $arguments);
-		}
-		catch(\Exception $e) {}
-
+		// First try to call Data Function.
 		try {
 			return $this->callDataFunction($method, $arguments);
 		}
-		catch(\Exception $e) {}
+		catch(WrongFunctionException $e) {}
+		catch(\Exception $e) {
+			throw $e;
+		}
 
+		// Try to call Helper function.
 		try{
 			return $this->callHelperFunction($method, $arguments);
 		}

@@ -26,9 +26,9 @@ class UnderscoreHelper implements Helper {
 		return $this->ready;
 	}
 
-	Public function run($function_name, $data, $arguments)
+	Public function run($function_name, $arguments, $knot)
 	{
-		$underscore = \__($data);
+		$underscore = \__($knot->toArray());
 
 		return call_user_func_array(array($underscore, $function_name), $arguments);
 	}

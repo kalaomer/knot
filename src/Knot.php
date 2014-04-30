@@ -4,7 +4,7 @@ class Knot {
 	/**
 	 * Version
 	 */
-	CONST VERSION = "1.0.0";
+	CONST VERSION = "1.1";
 
 	/**
 	 * For parsing array path.
@@ -16,6 +16,8 @@ class Knot {
 	 * @var array
 	 */
 	Public static $helpers = array(
+		"PHPArrayEqualHelper",
+		"PHPArrayChangerHelper",
 		"UnderscoreHelper"
 	);
 

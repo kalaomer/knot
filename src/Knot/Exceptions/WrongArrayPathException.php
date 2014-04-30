@@ -8,5 +8,4 @@
 
 namespace Knot\Exceptions;
 
-
 Class WrongArrayPathException extends \Exception {}

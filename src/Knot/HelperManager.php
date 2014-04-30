@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kalaomer
- * Date: 4/19/14
- * Time: 2:30 PM
- */
 
 namespace Knot;
 
+use \Knot\Exceptions\WrongFunctionException;
 
 class HelperManager {
 
@@ -30,23 +25,29 @@ class HelperManager {
 		}
 	}
 
-	Public function execute($function_name, $data, $arguments)
+	Public function execute($function_name, $arguments, $knot)
 	{
-		$target_helper = $this->isFunction($function_name);
+		$target_helper = $this->targetHelper($function_name);
 
 		if($target_helper == false)
 		{
-			throw new \Exception("Wrong function name! Function: " . $function_name);
+			throw new WrongFunctionException("Wrong function name! Function: " . $function_name);
 		}
 
-		return $target_helper->run($function_name, $data, $arguments);
+		try {
+			return $target_helper->run($function_name, $arguments, $knot);
+		}
+		catch(\Exception $e)
+		{
+			throw $e;
+		}
 	}
 
-	Public function isFunction($function_name)
+	Public function targetHelper($function_name)
 	{
 		foreach($this->helpers as $helper)
 		{
-			if ($helper->isFunction($function_name))
+			if ($helper->isFunction($function_name) !== False)
 			{
 				return $helper;
 			}
