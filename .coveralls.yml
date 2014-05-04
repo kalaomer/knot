@@ -1,0 +1,8 @@
+#.coveralls.yml
+
+repo_token: BSMnMjmio0YdicEELHoxSyZux5ST0TYiK
+
+# single file
+coverage_clover: logs/clover.xml
+
+json_path: logs/coveralls-upload.json

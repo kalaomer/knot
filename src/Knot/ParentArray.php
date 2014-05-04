@@ -161,7 +161,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 * In ParentArray's child's parent is self.
 	 * @return $this
 	 */
-	Protected function childParent()
+	Public function childParent()
 	{
 		return $this;
 	}
@@ -175,141 +175,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	{
 		return isset($this->data[$key]);
 	}
-
-	/**
-	 * @param $path
-	 * @return bool
-	 */
-	Public function isPath($path)
-	{
-		try	{
-			$this->get($path);
-			return true;
-		}
-		catch(Exceptions\WrongArrayPathException $e) {
-			return false;
-		}
-	}
-
-	/**
-	 * For Get path without parsing default return to data.
-	 *
-	 * @param $path
-	 * @return Mixed
-	 * @throws Exceptions\WrongArrayPathException
-	 */
-	Public function getOnly($path)
-	{
-		$arguments = func_get_args();
-
-		if (isset($arguments[1])) {
-			$default_return = $arguments[1];
-		}
-
-		try	{
-			return $this->get($path);
-		}
-		catch(Exceptions\WrongArrayPathException $e) {
-			if (isset($default_return)) {
-				return $default_return;
-			}
-
-			throw $e;
-		}
-	}
-
-	/**
-	 * @param $path
-	 * @param default_return
-	 * @return Mixed|\Knot\ChildArray
-	 * @throws Exceptions\WrongArrayPathException
-	 */
-	Public function &get($path)
-	{
-		$arguments = func_get_args();
-
-		isset($arguments[1]) && $default_return = $arguments[1];
-
-		$target_data = &$this->data;
-
-		foreach (self::pathParser($path) as $way) {
-
-			if (!isset($target_data[$way]))	{
-
-				if ( isset($default_return) ) {
-					$r = $this->set($path, $default_return);
-					return $r;
-				}
-
-				throw new Exceptions\WrongArrayPathException($path);
-			}
-
-			$target_data = &$target_data[$way];
-		}
-
-		if (is_array($target_data))	{
-			$r = new ChildArray($target_data, $this->childParent(), $path);
-			return $r;
-		}
-
-		return $target_data;
-	}
-
-	/**
-	 * @param $rawPath
-	 * @param $value
-	 * @return Mixed|\Knot\ChildArray
-	 */
-	Public function set($rawPath, $value)
-	{
-		$target_data =& $this->data;
-
-		foreach (self::pathParser($rawPath) as $path) {
-			// Eğer yol yok ise veya yol var ama array değilse!
-			if (!isset($target_data[$path]) || !is_array($target_data[$path])) {
-				$target_data[$path] = array();
-			}
-
-			$target_data =& $target_data[$path];
-		}
-
-		$target_data = $value;
-
-		if (is_array($target_data)) {
-			return new ChildArray($target_data, $this->childParent(), $this->path());
-		}
-
-		return $value;
-	}
-
-	/**
-	 * @param $rawPath
-	 * @return $this
-	 */
-	Public function del($rawPath)
-	{
-		$target_data =& $this->data;
-
-		$paths = self::pathParser($rawPath);
-
-		$target_key = array_pop($paths);
-
-		foreach ($paths as $path) {
-			// Eğer yol yok ise veya yol var ama array değilse!
-			if (!isset($target_data[$path]) || !is_array($target_data[$path])) {
-				return $this;
-			}
-
-			$target_data =& $target_data[$path];
-		}
-
-		if (isset($target_data[$target_key])) {
-			unset($target_data[$target_key]);
-		}
-
-		return $this;
-	}
-
+	
 	/**
 	 * Reset data!
 	 * @return $this

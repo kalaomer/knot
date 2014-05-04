@@ -38,6 +38,8 @@ class Knot
 	 * @var array
 	 */
 	public static $helpers = array(
+		"KnotPathHelper",
+		"KnotAdditionHelper",
 		"PHPArrayEqualHelper",
 		"PHPArrayChangerHelper",
 		"UnderscoreHelper"

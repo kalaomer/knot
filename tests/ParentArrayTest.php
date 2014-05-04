@@ -140,8 +140,6 @@ class ParentArrayTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals("Nothing", $obj->getOnly("foo.string.bla-bla", "Nothing"));
 
-		$this->assertEquals("Nothing", $obj->getOnly("foo.string.bla-bla", "Nothing"));
-
 		// Exception HERE!
 		$this->assertEquals("Nothing", $obj->getOnly("foo.string.bla-bla"));
 	}

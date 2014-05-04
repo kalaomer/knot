@@ -27,7 +27,7 @@ class ChildArray extends ParentArray {
 	 * In ChildArray's child's parent is parent array.
 	 * @return $this
 	 */
-	Protected function childParent()
+	Public function childParent()
 	{
 		return $this->parent_array;
 	}
