@@ -8,4 +8,9 @@
 
 namespace Knot\Exceptions;
 
-Class WrongArrayPathException extends \Exception {}
+Class WrongArrayPathException extends \Exception {
+	Public function __toString()
+	{
+		return __CLASS__ . ":[" . $this->code . "]: Wrong Path. Path: " . $this->message . '\n';
+	}
+}

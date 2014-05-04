@@ -47,7 +47,7 @@ class HelperManager {
 	{
 		foreach($this->helpers as $helper)
 		{
-			if ($helper->isFunction($function_name) !== False)
+			if ($helper->isReady() && $helper->isFunction($function_name) !== False)
 			{
 				return $helper;
 			}

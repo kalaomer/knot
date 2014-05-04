@@ -5,3 +5,5 @@
 /old-versions/*
 /.idea/
 /.idea/*
+/nbproject/
+/results/

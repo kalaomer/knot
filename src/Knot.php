@@ -1,21 +1,43 @@
 <?php
+/**
+ * Knot module.
+ *
+ * PHP version 5
+ *
+ * @category PHP
+ * @package  Knot
+ * @author   Ömer Kala <kalaomer@hotmail.com>
+ * @license  https://raw.githubusercontent.com/kalaomer/knot/master/LICENSE.txt MIT licence
+ * @version  GIT: $Id https://github.com/kalaomer/knot/
+ * @link     https://github.com/kalaomer/knot/
+ */
 
-class Knot {
+/**
+ * Knot class.
+ *
+ * @category PHP
+ * @package  Knot
+ * @author   Ömer Kala <kalaomer@hotmail.com>
+ * @license  Release: Git
+ * @link     https://github.com/kalaomer/knot/
+ */
+class Knot
+{
 	/**
 	 * Version
 	 */
-	CONST VERSION = "1.1";
+	const VERSION = "1.1";
 
 	/**
 	 * For parsing array path.
 	 */
-	CONST ARRAY_PATH_DELIMITER = ".";
+	const ARRAY_PATH_DELIMITER = ".";
 
 	/**
-	 * Helpers.
+	 * Helper list.
 	 * @var array
 	 */
-	Public static $helpers = array(
+	public static $helpers = array(
 		"PHPArrayEqualHelper",
 		"PHPArrayChangerHelper",
 		"UnderscoreHelper"
@@ -25,19 +47,40 @@ class Knot {
 	 * Helper Manager.
 	 * @var \Knot\HelperManager
 	 */
-	Public static $helper_manager;
+	public static $helper_manager;
 
-	Public static  function init()
+	/**
+	 * Load Helper Manager.
+	 *
+	 * @codeCoverageIgnore
+	 *
+	 * @return void
+	 */
+	public static function init()
 	{
 		self::$helper_manager = new Knot\HelperManager();
 	}
 
-	Public static function createByReference(&$data)
+	/**
+	 * Create Knot by reference.
+	 *
+	 * @param array &$data Knot data
+	 *
+	 * @return \Knot\ParentArray
+	 */
+	public static function createByReference(array &$data)
 	{
 		return new \Knot\ParentArray($data, null, '');
 	}
 
-	Public static function create($data)
+	/**
+	 * Create Knot without reference.
+	 *
+	 * @param array $data Knot data
+	 *
+	 * @return \Knot\ParentArray
+	 */
+	public static function create($data)
 	{
 		return new \Knot\ParentArray($data, null, '');
 	}

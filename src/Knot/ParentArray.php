@@ -5,7 +5,7 @@ namespace Knot;
 use \Knot\Exceptions\WrongFunctionException;
 use \Knot\Exceptions\WrongArrayPathException;
 
-/*
+/**
  * Main Knot class.
  */
 class ParentArray extends \Knot implements \Arrayaccess, \Countable {
@@ -50,19 +50,18 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	 */
 	Public function &__get($key)
 	{
-		try	{
+		if (array_key_exists($key, $this->data)) {
 			$target =& $this->data[$key];
-
-			if (is_array($target)) {
-				$r = new ChildArray($target, $this->childParent(), $this->path($key));
-				return $r;
-			}
-
-			return $target;
+		} else {
+			throw new WrongArrayPathException($key);
 		}
-		catch(\Exception $e) {
-			throw $e;	
+
+		if (is_array($target)) {
+			$r = new ChildArray($target, $this->childParent(), $this->path($key));
+			return $r;
 		}
+
+		return $target;
 	}
 
 	/**
@@ -78,7 +77,8 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		}
 
 		try {
-			return call_user_func_array($this->data[$method], array_merge(array(&$this->data), $arguments));
+			$arguments = array_merge(array(&$this->data), $arguments);
+			return call_user_func_array($this->data[$method], $arguments);
 		}
 		catch(\Exception $e) {
 			throw $e;
@@ -202,14 +202,17 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	{
 		$arguments = func_get_args();
 
-		isset($arguments[1]) && $default_return = $arguments[1];
+		if (isset($arguments[1])) {
+			$default_return = $arguments[1];
+		}
 
 		try	{
 			return $this->get($path);
 		}
 		catch(Exceptions\WrongArrayPathException $e) {
-			if (isset($default_return))
+			if (isset($default_return)) {
 				return $default_return;
+			}
 
 			throw $e;
 		}
@@ -238,7 +241,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 					return $r;
 				}
 
-				throw new Exceptions\WrongArrayPathException('Path can\'t find! Path:' . $path);
+				throw new Exceptions\WrongArrayPathException($path);
 			}
 
 			$target_data = &$target_data[$way];
@@ -263,8 +266,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 		foreach (self::pathParser($rawPath) as $path) {
 			// Eğer yol yok ise veya yol var ama array değilse!
-			if (!isset($target_data[$path]) || !is_array($target_data[$path]))
-			{
+			if (!isset($target_data[$path]) || !is_array($target_data[$path])) {
 				$target_data[$path] = array();
 			}
 
@@ -273,8 +275,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 		$target_data = $value;
 
-		if(is_array($target_data))
-		{
+		if (is_array($target_data)) {
 			return new ChildArray($target_data, $this->childParent(), $this->path());
 		}
 
@@ -295,8 +296,9 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 
 		foreach ($paths as $path) {
 			// Eğer yol yok ise veya yol var ama array değilse!
-			if (!isset($target_data[$path]) || !is_array($target_data[$path]))
+			if (!isset($target_data[$path]) || !is_array($target_data[$path])) {
 				return $this;
+			}
 
 			$target_data =& $target_data[$path];
 		}
@@ -371,8 +373,8 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		return new self($_data, null, '');
 	}
 
-	/* =============================================================================================================
-	 * =============================================================================================================
+	/* ===============================================
+	 * ===============================================
 	 * Array Access Interface.
 	 *
 	 * Array Access ile direk data içindeki değer döndürülür.
@@ -393,6 +395,11 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	*/
 	Public function &offsetGet( $offset )
 	{
+		if ( is_null( $offset ) ) {
+			$this->data[] = array();
+
+			return $this->data[$this->lastKey()];
+		}
 		return $this->data[$offset];
 	}
 
@@ -405,8 +412,7 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 	{
 		if ( is_null( $offset ) ) {
 			$this->data[]= $value;
-		}
-		else {
+		} else {
 			$this->data[$offset] = $value;
 		}
 	}
@@ -420,8 +426,8 @@ class ParentArray extends \Knot implements \Arrayaccess, \Countable {
 		$this->__unset($offset);
 	}
 
-	/* =============================================================================================================
-	 * =============================================================================================================
+	/* ===============================================
+	 * ===============================================
 	 * Countable Interface.
 	 */
 

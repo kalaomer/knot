@@ -8,12 +8,8 @@
 
 require_once 'bootstrap.php';
 
-$parent = ar(1,2,3)->merge(array(3,3,4,5,6,7))->unique();
+$a = ar();
 
-$parent->child = array("a", "b", "c");
+$a[][][]=1;
 
-$child = $parent->child;
-
-$child['new']['way'] = 1;
-
-var_dump($parent->toArray());
+var_dump($a->toArray());

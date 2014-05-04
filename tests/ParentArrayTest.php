@@ -2,11 +2,9 @@
 
 require_once dirname(__DIR__) . "/vendor/autoload.php";
 
-class DataTest extends PHPUnit_Framework_TestCase
-{
+class ParentArrayTest extends PHPUnit_Framework_TestCase {
 
 	Protected $objArray = array(
-		1,2,3,
 		"foo" => array(
 			"sub" => array(
 				"vuu" => "uuuuvvv"
@@ -19,6 +17,13 @@ class DataTest extends PHPUnit_Framework_TestCase
 		"string" => "info.."
 	);
 
+	Public function testMagicConstruct()
+	{
+		$obj = new \Knot\ParentArray($this->objArray, null, '');
+        
+        $this->assertSame($this->objArray, $obj->toArray());
+	}
+
 	/**
 	 * @dataProvider simpleObj
 	 */
@@ -26,8 +31,9 @@ class DataTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertEquals("info..", $obj->string);
 		$this->assertEquals(array("name", "is", "Knot!"), $obj->my->toArray());
+		$this->assertEquals(array("name", "is", "Knot!"), $obj->__get('my')->toArray());
 	}
-
+	
 	/**
 	 * @dataProvider simpleObj
 	 */
@@ -53,6 +59,14 @@ class DataTest extends PHPUnit_Framework_TestCase
 	{
 		unset($father->string);
 		$this->assertArrayNotHasKey("string", $father->toArray());
+	}
+
+	/**
+	 * @dataProvider simpleObj
+	 */
+	Public function testMagicInvoke($obj)
+	{
+		$this->assertEquals($obj->get("foo"), $obj("foo"));
 	}
 
 	/**
@@ -108,10 +122,10 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(array(1,2,3), $obj->get("foo.sub.vuu.new", array(1,2,3))->toArray());
 
-        $this->assertEquals("name", $obj->get("my.0"));
+		$this->assertEquals("name", $obj->get("my.0"));
 
 		$this->assertEquals(array(
-            "name", "is", "Knot!"
+			"name", "is", "Knot!"
 		), $obj->get("my")->toArray());
 
 	}
@@ -180,6 +194,10 @@ class DataTest extends PHPUnit_Framework_TestCase
 		$obj->del("string");
 
 		$this->assertEquals(false, $obj->isPath("string"));
+
+		$obj->del("string");
+
+		$this->assertSame($obj, $obj->del("no.way"));
 	}
 
 	/**
@@ -204,6 +222,12 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$obj['new'][][] = 1;
 		$this->assertEquals(1, $obj['new'][0][0]);
+
+		$obj[][][] = 2;
+		$this->assertEquals(2, $obj[0][0][0]);
+
+		$obj[] = 3;
+		$this->assertEquals(3, $obj[1]);
 	}
 
 	/**
@@ -222,8 +246,10 @@ class DataTest extends PHPUnit_Framework_TestCase
 	Public function testOffsetUnset($obj)
 	{
 		unset($obj["foo"]["another"]);
-
 		$this->assertEquals(false, isset($obj["foo"]["another"]));
+
+		unset($obj["foo"]);
+		$this->assertEquals(false, isset($obj["foo"]));
 	}
 
 	/**
@@ -263,9 +289,6 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(array(), $child->toArray());
 
-		$child->new = "way";
-
-		$this->assertEquals(false, isset($obj->foo->new));
 	}
 
 	/**
@@ -297,6 +320,16 @@ class DataTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider simpleObj
 	 */
+	Public function testLastKey($obj)
+	{
+		$obj->lastKey = "new value";
+
+		$this->assertEquals("lastKey", $obj->lastKey());
+	}
+
+	/**
+	 * @dataProvider simpleObj
+	 */
 	Public function testFatherCloneRelationship($obj)
 	{
 		$clone = $obj->foo->copy();
@@ -304,6 +337,16 @@ class DataTest extends PHPUnit_Framework_TestCase
 		$clone->set("new.way", "goo!");
 
 		$this->assertEquals(false, $obj->isPath("foo.new.way"));
+	}
+
+	Public function testStaticPathCombiner()
+	{
+		$this->assertEquals("foo.sub.way", \Knot\ParentArray::pathCombiner(array("foo", "sub", "way")));
+	}
+
+	Public function testStaticPathParser()
+	{
+		$this->assertEquals(array("foo", "sub", "way"), \Knot\ParentArray::pathParser("foo.sub.way"));
 	}
 
 	Public function simpleObj()
