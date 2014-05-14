@@ -8,7 +8,7 @@
 
 class UnderscoreHelperTest extends PHPUnit_Framework_TestCase {
 
-	Protected $objArray = array(
+	protected $objArray = array(
 		array(
 			'name'    =>  'Joe Bloggs',
 			'id'      =>  1,
@@ -32,11 +32,10 @@ class UnderscoreHelperTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @dataProvider simpleObj
 	 */
-	Public function testFind($obj)
+	public function testFind($obj)
 	{
 		$this->assertEquals($this->objArray[2], $obj->find(
-			function($student)
-			{
+			function($student) {
 				return $student["grade"] == 81;
 			}
 		));
@@ -45,7 +44,7 @@ class UnderscoreHelperTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @dataProvider simpleObj
 	 */
-	Public function testGroupBy($obj)
+	public function testGroupBy($obj)
 	{
 		$this->assertEquals(array(
 			"A" => array(
@@ -61,18 +60,17 @@ class UnderscoreHelperTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @dataProvider simpleObj
 	 */
-	Public function testTemplate($obj)
+	public function testTemplate($obj)
 	{
 		$name = "Jack";
 
 	}
 
-	Public function simpleObj()
+	public function simpleObj()
 	{
 		return array(
 			array(arr($this->objArray))
 		);
 	}
-
 }
  

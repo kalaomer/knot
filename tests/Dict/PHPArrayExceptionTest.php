@@ -2,7 +2,7 @@
 
 class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 
-	Protected $objArray = array(
+	protected $objArray = array(
 		1,2,3,
 		"foo" => array(
 			"sub" => array(
@@ -20,7 +20,7 @@ class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider simpleObj
 	 * @expectedException \Knot\Exceptions\WrongArrayPathException
 	 */
-	Public function testGetManually($obj)
+	public function testGetManually($obj)
 	{
 		$obj->__get('asd');
 	}
@@ -28,11 +28,13 @@ class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException \Exception
 	 */
-	Public function testCallDataCallable()
+	public function testCallDataCallable()
 	{
 		$obj = ar();
 
-		$obj->function = function($a, $b) {};
+		$obj->function = function($a, $b) {
+			
+		};
 
 		$obj->function();
 	}
@@ -40,7 +42,7 @@ class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException \Knot\Exceptions\WrongFunctionException
 	 */
-	Public function testFunction()
+	public function testFunction()
 	{
 		$obj = ar();
 
@@ -50,14 +52,14 @@ class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException \Exception
 	 */
-	Public function testHelperFunction()
+	public function testHelperFunction()
 	{
 		$obj = ar();
 
-		$obj->merge(1,2,3);
+		$obj->merge(1, 2, 3);
 	}
 
-	Public function simpleObj()
+	public function simpleObj()
 	{
 		return array(
 			array(arr($this->objArray))

@@ -2,7 +2,7 @@
 
 class WrongArrayPathExceptionTest extends PHPUnit_Framework_TestCase {
 
-	Public function testToString()
+	public function testToString()
 	{
 		$e = new \Knot\Exceptions\WrongArrayPathException("foo");
 

@@ -8,8 +8,25 @@
 
 require_once 'bootstrap.php';
 
-$a = ar();
+$obj = arr(array(
+    "foo" => array(
+        "sub" => array(
+            "vuu" => "uuuuvvv"
+        ),
+        "another" => "pff"
+    ),
+    "my" => array(
+        "name", "is", "Knot!"
+    ),
+    "string" => "info.."
+));
 
-$a[][][]=1;
+$child = $obj->foo;
 
-var_dump($a->toArray());
+$cild["new"]["way"] = "goo!";
+
+var_dump($child);
+
+$obj["new"]["way"] = "goo!";
+
+$child->kill();

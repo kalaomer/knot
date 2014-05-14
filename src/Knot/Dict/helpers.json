@@ -1,0 +1,7 @@
+{
+	"__info_providers": "Knot Dict Providers.",
+	"providers": [
+		"\\Knot\\Dict\\Helpers\\PHPArrayChangerHelper",
+		"\\Knot\\Dict\\Helpers\\PHPArrayEqualHelper"
+	]
+}

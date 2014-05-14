@@ -2,4 +2,6 @@
 
 namespace Knot\Exceptions;
 
-Class WrongFunctionException extends \Exception {}
+class WrongFunctionException extends \Exception {
+	
+}

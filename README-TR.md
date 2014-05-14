@@ -29,7 +29,7 @@ Composer ile kolay bir şekilde yüklenebilir.
 ```
 {
     "require": {
-        "kalaomer/knot": "v1.*"
+        "knot/knot": "v1.*"
     }
 }
 ```
@@ -136,7 +136,7 @@ $obj = ar();
 $obj->new->way->foo = 1;
 ```
 
-Burada $obj nesnesinin data'sında bulunan new key'ine sahip ifade stdClass nesnesine eşitlenmiştir.
+Burada $obj nesnesinin data'sında bulunan new key'ine sahip ifade ```stdClass``` nesnesine eşitlenmiştir.
 
 Bu durumdan kaçınmak için bu özelliği var olan yollar için kullanılması gerekmektedir.
 
@@ -210,13 +210,42 @@ Knot eğer çocuk ise aile içindeki yolunu verir. Çocuk değilse boş değer d
 
 Knot çocukları ile bağlarını korur, çocukta yapılan değişiklik Knot Parent üzerinde değişiklik oluşturur. Bu bağdan kurtulmak için ```copy``` fonksiyonu kullanılır. Çıktısı parent ile bağı bulunmayan Knot nesnesi olur.
 
-#### count()
+#### count([$mode])
 
-Knot data'sındaki eleman sayısını döndürür. Ek olarak [Countable](http://www.php.net/manual/en/class.countable.php) arayüzü ile PHP'nin ```count()``` fonksiyonu yardımı ile aynı işlem yapılabilir.
+Knot data'sındaki eleman sayısını döndürür. Ek olarak [Countable](http://www.php.net/manual/en/class.countable.php) arayüzü sayesinde PHP'nin ```count()``` fonksiyonu yardımı ile aynı işlem yapılabilir.
 
-### PHP Array fonksiyonları
+```$mode``` değişkeni sayesinde count fonksiyonuna sayma tipi verilebilir. ```COUNT_RECURESIVE``` değeri verilirse Knot içindeki bütün array yapıların eleman sayıları toplamı dönecektir.
 
-Knot, fonksiyonlar için hazırda bulunan PHP'nin Array fonksiyonlarını temel alır. Bunu yaparken sınıflandırma kullanılmıştır. Bunun nedeni bu fonksiyonların argüman girişlerinin ve çıkış değelerinin farklı olmasıdır.
+##### Uyarı
+```count($knot, COUNT_RECURESIVE)``` şeklindeki kullanımda ```$mode``` değişkeni ```COUNT_RECURESIVE``` değerine eşitlenmemektedir. Bunun açıklaması şu [linkte](https://bugs.php.net/bug.php?id=58102&edit=3) bulunmaktadır. Bunun yerine ```COUNT_RECURESIVE``` modu için ```$knot->count(true)``` ifadesini kullanabilirsiniz.
+
+### Knot yapısındaki Callable'lar
+
+Knot içerine callable bir veri eklendiği zaten bu yapıyı fonksiyon çağırır gibi çağırma imkanı vermektedir.
+
+Örnek:
+```
+$obj = ar();
+
+$obj->simple_function = function(&$data, $key, $value)
+{
+    $data[$key] = $value;
+}
+
+$obj->simple_function("simple", "value");
+```
+
+Burada $obj'nin içine önce simple_function adında bir değer açılarak Closure ifadeye eşitleniyor. Sonrasında bu ifadeyi fonksiyon gibi kullanarak çalıştırılıyor.
+
+Array içine fonksiyon yazmak için callable yapısının argümanlarını ilk argümanı Knot yapısının datası gerisini fonksiyon tetiklenirken yollanan argümanlar olarak ayarlamalısınız. Knot yapısındaki data referans edilebilir olarak gönderilmektedir.
+
+### Knot yardımcıları
+
+Knot fonksiyon ihtiyacını dışarıdan yardımcılar ile sağlayabilmektedir. Bunun nedeni Array için yazılmış hazır kütüphaneleri Knot yapısında kullanımını sağlamaktır. Bu yapı ile PHP bünyesindeki fonksiyonlar için helper ile kullanım imkanı verilmiştir. Ek olarak [underscore.php](http://brianhaveri.github.io/Underscore.php/) kütüphanesini yapısına ekleyen bir yardımcı bulundurmaktadır.
+
+#### PHP Array Yardımcıları
+
+Knot, hazırda bulunan PHP'nin Array fonksiyonlarını etkin şekilde kullanabilmektedir. Bunu yaparken sınıflandırma kullanılmıştır. Bunun nedeni bu fonksiyonların argüman girişlerinin ve çıkış değelerinin farklı olmasıdır.
 
 PHP fonksiyonları Knot yapısında ```array_``` ekli olmadan ve ```_``` ifadesinden sonraki harfleri büyük şekilde başlayacak şekilde kullanır. Bunun nedeni PSR-1 standartlarını uygulamak ve aynı zamanda ```array_``` ekinden kurtulmaktır. Örneğin ```array_merge``` fonksiyonu Knot içinde ```merge``` olarak geçmektedir. ```array_merge_recursive``` fonksiyonu ```mergeRecursive``` şeklinde çağrılır.
 
@@ -296,30 +325,6 @@ $first_value = $obj->shift();
 // array(2,3) yapısını verecektir.
 $obj->toArray();
 ```
-
-### Knot yapısındaki Callable'lar
-
-Knot içerine callable bir veri eklendiği zaten bu yapıyı fonksiyon çağırır gibi çağırma imkanı vermektedir.
-
-Örnek:
-```
-$obj = ar();
-
-$obj->simple_function = function(&$data, $key, $value)
-{
-    $data[$key] = $value;
-}
-
-$obj->simple_function("simple", "value");
-```
-
-Burada $obj'nin içine önce simple_function adında bir değer açılarak Closure ifadeye eşitleniyor. Sonrasında bu ifadeyi fonksiyon gibi kullanarak çalıştırılıyor.
-
-Array içine fonksiyon yazmak için callable yapısının argümanlarını ilk argümanı Knot yapısının datası gerisini fonksiyon tetiklenirken yollanan argümanlar olarak ayarlamalısınız. Knot yapısındaki data referans edilebilir olarak gönderilmektedir.
-
-### Knot yardımcıları
-
-Knot fonksiyon ihtiyacını dışarıdan yardımcılar ile sağlayabilmektedir. Bunun nedeni Array için yazılmış hazır kütüphaneleri Knot yapısında kullanımını sağlamak. Knot şu an için [underscore.php](http://brianhaveri.github.io/Underscore.php/) kütüphanesini yapısına ekleyen bir yardımcı kullanmaktadır.
 
 #### Underscore
 

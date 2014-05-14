@@ -1,6 +1,6 @@
 # Knot
 
-[![Build Status](https://travis-ci.org/kalaomer/knot.svg?branch=master)](https://travis-ci.org/kalaomer/knot)
+[![Build Status](https://travis-ci.org/knot-php/knot.svg?branch=v1.1.2)](https://travis-ci.org/knot-php/knot)
 [![Dependency Status](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5/badge.png)](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5)
 [![Latest Version](http://img.shields.io/github/tag/kalaomer/knot.svg)](https://github.com/kalaomer/knot/releases)
 [![Coverage Status](https://coveralls.io/repos/kalaomer/knot/badge.png?branch=master)](https://coveralls.io/r/kalaomer/knot?branch=master)
@@ -31,7 +31,7 @@ Knot is available for Composer.
 ```
 {
     "require": {
-        "kalaomer/knot": "v1.*"
+        "knot/knot": "v1.*"
     }
 }
 ```

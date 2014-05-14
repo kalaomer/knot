@@ -1,13 +1,16 @@
 {
-    "name": "kalaomer/knot",
+    "name": "knot/knot",
     "description": "Array Object for PHP",
+    "keywords": ["array", "tool"],
+    "license": "MIT",
     "authors": [
         {
-            "name": "Omer Kala",
+            "name": "Ömer Kala",
             "email": "kalaomer@hotmail.com"
         }
     ],
     "require": {
+        "php": ">=5.4.0",
         "underscore/underscore.php": "dev-master"
     },
     "require-dev": {

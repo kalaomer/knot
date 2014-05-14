@@ -12,6 +12,8 @@
  * @link     https://github.com/kalaomer/knot/
  */
 
+namespace Knot\Dict;
+
 /**
  * Knot class.
  *
@@ -21,47 +23,12 @@
  * @license  Release: Git
  * @link     https://github.com/kalaomer/knot/
  */
-class Knot
+class Dict
 {
 	/**
 	 * Version
 	 */
-	const VERSION = "1.1";
-
-	/**
-	 * For parsing array path.
-	 */
-	const ARRAY_PATH_DELIMITER = ".";
-
-	/**
-	 * Helper list.
-	 * @var array
-	 */
-	public static $helpers = array(
-		"KnotPathHelper",
-		"KnotAdditionHelper",
-		"PHPArrayEqualHelper",
-		"PHPArrayChangerHelper",
-		"UnderscoreHelper"
-	);
-
-	/**
-	 * Helper Manager.
-	 * @var \Knot\HelperManager
-	 */
-	public static $helper_manager;
-
-	/**
-	 * Load Helper Manager.
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @return void
-	 */
-	public static function init()
-	{
-		self::$helper_manager = new Knot\HelperManager();
-	}
+	const VERSION = "1.2";
 
 	/**
 	 * Create Knot by reference.
@@ -72,7 +39,7 @@ class Knot
 	 */
 	public static function createByReference(array &$data)
 	{
-		return new \Knot\ParentArray($data, null, '');
+		return new ParentDict($data, null, '');
 	}
 
 	/**
@@ -84,8 +51,6 @@ class Knot
 	 */
 	public static function create($data)
 	{
-		return new \Knot\ParentArray($data, null, '');
+		return new ParentDict($data, null, '');
 	}
 }
-
-Knot::init();

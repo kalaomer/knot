@@ -11,8 +11,14 @@
          syntaxCheck="false"
         >
     <testsuites>
-        <testsuite name="Knot Test Suite">
-            <directory>./tests/</directory>
+        <testsuite name="Knot Dict Test Suite">
+            <directory>./tests/Dict</directory>
+        </testsuite>
+    </testsuites>
+
+    <testsuites>
+        <testsuite name="Knot Exceptions Test Suite">
+            <directory>./tests/Exceptions</directory>
         </testsuite>
     </testsuites>
 

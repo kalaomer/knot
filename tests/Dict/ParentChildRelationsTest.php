@@ -8,7 +8,7 @@
 
 class ParentChildRelationsTest extends PHPUnit_Framework_TestCase {
 
-	Public function testParent()
+	public function testParent()
 	{
 		$parent = ar();
 
@@ -29,6 +29,5 @@ class ParentChildRelationsTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($new->parent()->child->toArray(), $parent->child->toArray());
 
 	}
-
 }
  

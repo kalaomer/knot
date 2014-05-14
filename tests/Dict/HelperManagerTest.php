@@ -10,8 +10,7 @@ class DataTest extends PHPUnit_Framework_TestCase {
     
     public function testConstruct()
     {
-        $helper = new Knot\HelperManager();
+        $helper = new \Knot\Dict\HelperManager();
         $this->assertAttributeNotEmpty('helpers', $helper);
-        $this->assertAttributeCount(count(\Knot::$helpers), 'helpers', $helper);
     }
 }
