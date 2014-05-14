@@ -1,6 +1,6 @@
 #.coveralls.yml
 
-repo_token: BSMnMjmio0YdicEELHoxSyZux5ST0TYiK
+repo_token: AjwI8JKdGiPueQn3FCDCaq8wrYU9hPGWb
 
 # single file
 coverage_clover: logs/clover.xml
