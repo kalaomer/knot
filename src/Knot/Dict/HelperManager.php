@@ -15,7 +15,7 @@ class HelperManager {
 	/**
 	 * Helper list.
 	 */
-	private $helper = array();
+	private $helperList = array();
 
 	/**
 	 * Functions Routes.
@@ -54,7 +54,7 @@ class HelperManager {
 	 */
 	public function addRoute($functionRoute, callable $function)
 	{
-		if ($this->isFunctionRoute($functionRoute)) {
+		if ($this->isRoute($functionRoute)) {
 			return false;
 		}
 
@@ -67,7 +67,7 @@ class HelperManager {
 	 *
 	 * @return true|false
 	 */
-	public function isFunctionRoute($functionName)
+	public function isRoute($functionName)
 	{
 		return isset($this->functionRoutes[$functionName]);
 	}
@@ -89,7 +89,7 @@ class HelperManager {
 
 		$helperObject->addRoutes($this);
 
-		return $this->helpers[$helperName] = $helperObject;
+		return $this->helperList[$helperName] = $helperObject;
 	}
 
 	/**
@@ -100,7 +100,7 @@ class HelperManager {
 	 */
 	public function execute($functionName, $arguments, $knot)
 	{
-		if ($this->isFunctionRoute($functionName))
+		if ($this->isRoute($functionName))
 		{
 			$targetFunction = $this->getRoute($functionName);
 			return call_user_func($targetFunction, $knot, $arguments);
@@ -116,6 +116,6 @@ class HelperManager {
 
 	public function isHelper($helperName)
 	{
-		return isset($this->helpers[$helperName]);
+		return isset($this->helperList[$helperName]);
 	}
 }

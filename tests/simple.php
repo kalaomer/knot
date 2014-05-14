@@ -8,6 +8,11 @@
 
 require_once 'bootstrap.php';
 
+// For debug mode!
+PHPUnit_TextUI_Command::main();
+
+die();
+
 $obj = arr(array(
     "foo" => array(
         "sub" => array(
@@ -23,7 +28,7 @@ $obj = arr(array(
 
 $child = $obj->foo;
 
-$cild["new"]["way"] = "goo!";
+$child["new"]["way"] = "goo!";
 
 var_dump($child);
 
