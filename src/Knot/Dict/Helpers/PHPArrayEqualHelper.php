@@ -8,11 +8,13 @@ use \Knot\Dict\HelperManager;
  * This helper method's returns changed data.
  */
 class PHPArrayEqualHelper implements HelperInterface {
-
+    
 	public $functions = [
 		"array_change_key_case",
 		"array_chunk",
+        "array_column",
 		"array_combine",
+        "array_count_values",
 		"array_diff_assoc",
 		"array_diff_key",
 		"array_diff_uassoc",
@@ -26,9 +28,12 @@ class PHPArrayEqualHelper implements HelperInterface {
 		"array_intersect_uassoc",
 		"array_intersect_ukey",
 		"array_intersect",
+        "array_keys",
 		"array_merge_recursive",
 		"array_merge",
 		"array_pad",
+        "array_replace_recursive",
+        "array_replace",
 		"array_reverse",
 		"array_slice",
 		"array_udiff_assoc",
@@ -37,7 +42,8 @@ class PHPArrayEqualHelper implements HelperInterface {
 		"array_uintersect_assoc",
 		"array_uintersect_uassoc",
 		"array_uintersect",
-		"array_unique"
+		"array_unique",
+        "array_values"
 	];
 
 	public function getName()

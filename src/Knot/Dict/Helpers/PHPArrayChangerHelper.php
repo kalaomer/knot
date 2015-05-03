@@ -10,22 +10,16 @@ use \Knot\Dict\HelperManager;
 class PHPArrayChangerHelper implements HelperInterface {
 
 	public $functions = [
-		"array_column",
-		"array_count_values",
-		"array_keys",
 		"array_multisort",
 		"array_pop",
 		"array_product",
 		"array_push",
 		"array_rand",
 		"array_reduce",
-		"array_replace_recursive",
-		"array_replace",
 		"array_shift",
 		"array_splice",
 		"array_sum",
 		"array_unshift",
-		"array_values",
 		"array_walk_recursive",
 		"array_walk"
 	];
