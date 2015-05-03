@@ -1,0 +1,11 @@
+/vendor/
+/vendor/*
+
+/composer.lock
+
+/.idea/
+/.idea/*
+
+/nbproject/
+/results/
+/logs/

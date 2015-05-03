@@ -1,0 +1,272 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>knot - modern array object</title>
+        <meta name="description" content="Modern Array object and more...">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles/normalize.css">
+        <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="content">
+            <div class="title">
+                <h1>$knot</h1>
+
+                <h2>Modern Array object and more...</h2>
+            </div>
+
+            <div class="terminal" data-typer-targets="$knot->merge([1, 2, 3]);|$knot->shift();|$knot->unshift($variable);|$knot->get('come.here');|$knot->set('say.to.everyone', 'Hi!');|$knot->del('this.one');|$knot['foo'] = 'ooo';|$knot['set']['this'] = 'value';|$knot[ ][ ][ ] = 'value';|$knot->reverse()->last(3)->toArray();|$knot->call('callableVariable', $arguments);"></div>
+            <a href="https://github.com/knot-php/knot" class="button">View on GitHub</a>
+            <a href="#method-list" class="down-arrow"></a>
+            <div id="method-list">
+                <div class="col-5">
+                    <h2>Factories</h2>
+                    <ul>
+                        <li><a href="#ar">ar</a></li>
+                        <li><a href="#arr">arr</a></li>
+                        <li><a href="#arrRef">arrRef</a></li>
+                    </ul>
+                </div>
+                <div class="col-5">
+                    <h2>Functions</h2>
+                    <ul>
+                        <li><a href="#toArray">toArray</a></li>
+                        <li><a href="#get">get</a></li>
+                        <li><a href="#getOnly">getOnly</a></li>
+                        <li><a href="#set">set</a></li>
+                        <li><a href="#del">del</a></li>
+                        <li><a href="#isPath">isPath</a></li>
+                        <li><a href="#kill">kill</a></li>
+                        <li><a href="#path">path</a></li>
+                        <li><a href="#copy">copy</a></li>
+                        <li><a href="count">count</a></li>
+                    </ul>
+                </div>
+                <div class="col-5">
+                    <h2>Helpers</h2>
+                    <ul>
+
+                    </ul>
+                </div>
+                <div class="col-5">
+
+                </div>
+                <div class="col-5">
+
+                </div>
+            </div>
+            <div class="documentation">
+                <div class="col-7">
+                    <h2 id="factories">Factories</h2>
+                    <p>Factory methods for create Knot objects.</p>
+
+                    <div id="ar">
+                        <div class="method">
+                            <h3>ar([$variable], ...)</h3>
+                        </div>
+                        <p>Create Knot object with arguments.</p>
+                        <pre>
+                            <code>
+$knot = ar(1, 2, 3);
+$knot = ar();
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="arr">
+                        <div class="method">
+                            <h3>arr(array $array)</h3>
+                        </div>
+                        <p>Create Knot object with array.</p>
+
+                        <pre>
+                            <code>
+$knot = arr([1, 2, 3]);
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="arrRef">
+                        <div class="method">
+                            <h3>arrRef(array $array)</h3>
+                        </div>
+                        <p>Create Knot object with array reference.</p>
+
+                        <pre>
+                            <code>
+$array = [1, 2, 3];
+
+$knot = arrRef($array);
+                            </code>
+                        </pre>
+                    </div>
+
+                    <h2 id="functions">Functions</h2>
+                    <p>Base Knot functions.</p>
+
+                    <div id="toArray">
+                        <div class="method">
+                            <h3>$knot->toArray()</h3>
+                        </div>
+                        <p>Return Knot array data. And also can returns references of Knot Data.</p>
+
+                        <pre>
+                            <code>
+$array = [1, 2, 3];
+
+$knot = arr($array);
+$knot->toArray();
+=> [1, 2, 3]
+
+$foo =& $knot->Array();
+=> returns $knot array references.
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="get">
+                        <div class="method">
+                            <h3>$knot->get(string path, [$default])</h3>
+                        </div>
+                        <p>Return Knot data which is target of path. If path target is empty, default variable is added to path with
+                            <a href="#set">set</a> function.</p>
+
+                        <p>If target is array, then <code>get</code> returns knot child object.</p>
+
+                        <pre>
+                            <code>
+$array = [
+    'one' => [
+        'two' => 'value'
+    ]
+];
+$knot = arr($array);
+$knot->get('one.two');
+=> return 'value'
+
+$knot->get('new.value', 'new value');
+=> return 'new value'
+
+$knot->get('new.value');
+=> return 'new value' again
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="getOnly">
+                        <div class="method">
+                            <h3>$knot->getOnly(string path, [default])</h3>
+                        </div>
+                        <p>Similar to <a href="#get">get</a>. However knot data is not changed with default value if this path is empty. If path target is empty and there is no default value then throw error.</p>
+                    </div>
+
+                    <div id="set">
+                        <div class="method">
+                            <h3>$knot->set(string path, value);</h3>
+                        </div>
+                        <p>Set Knot data by path.</p>
+
+                        <pre>
+                            <code>
+$knot = ar();
+$knot->set('one.two', 'value');
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="del">
+                        <div class="method">
+                            <h3>$knot->del(string path)</h3>
+                        </div>
+                        <p>Delete Knot data by path.</p>
+
+                        <pre>
+                            <code>
+$array = [
+    'one' => [
+        'two' => 'value'
+    ]
+];
+$knot = arr($array);
+$knot->del('one.two');
+
+$knot->toArray();
+=> return []
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="isPath">
+                        <div class="method">
+                            <h3>$knot->isPath(string path)</h3>
+                        </div>
+                        <p>Returns true if path target is not empty.</p>
+                    </div>
+
+                    <div id="kill">
+                        <div class="method">
+                            <h3>$knot->kill()</h3>
+                        </div>
+                        <p>Knot data changed with empty array.</p>
+                    </div>
+
+                    <div id="path">
+                        <method>
+                            <h3>$knot->path()</h3>
+                        </method>
+                        <p>If Knot is child, returns path by father knot.</p>
+                    </div>
+
+                    <div id="copy">
+                        <div class="method">
+                            <h3>$knot->copy()</h3>
+                        </div>
+                        <p>Create a new Knot without any relations if knot has a father knot.</p>
+                    </div>
+
+                    <div id="count">
+                        <div class="method">
+                            <h3>$knot->count([$countRecursive = false])</h3>
+                        </div>
+                        <p>Count of Knot's data. If <code>$countRecursive</code> then returns count of total keys.</p>
+                    </div>
+
+                    <div id="call">
+                        <div class="method">
+                            <h3>$knot->call(string $callableVariableName, [...arguments])</h3>
+                        </div>
+                        <p></p>
+                    </div>
+
+                    <h2 id="helpers">Helpers</h2>
+                    <p>Helpers are help to Knot for </p>
+
+                    <div id="helperManager">
+                        <div class="method">
+                            <h3></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <ul id="fix-navigation" class="side-navigation">
+                        <li><a href="#factories">factories</a></li>
+                        <li><a href="#functions">functions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <h4 id="love">
+                <a href="https://www.youtube.com/watch?v=CHekNnySAfM" rel="nofollow">knot(<span>♥</span>);</a>
+            </h4>
+        </div>
+        <script src="scripts/jquery.min.js"></script>
+        <script src="scripts/jquery.typer.js"></script>
+        <script src="scripts/main.js"></script>
+    </body>
+</html>
