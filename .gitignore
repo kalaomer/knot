@@ -1,10 +1,11 @@
 /vendor/
 /vendor/*
+
 /composer.lock
-/old-versions/
-/old-versions/*
+
 /.idea/
 /.idea/*
+
 /nbproject/
 /results/
 /logs/

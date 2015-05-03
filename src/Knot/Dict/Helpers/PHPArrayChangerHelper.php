@@ -9,7 +9,7 @@ use \Knot\Dict\HelperManager;
  */
 class PHPArrayChangerHelper implements HelperInterface {
 
-	public $functions = array(
+	public $functions = [
 		"array_column",
 		"array_count_values",
 		"array_keys",
@@ -28,9 +28,9 @@ class PHPArrayChangerHelper implements HelperInterface {
 		"array_values",
 		"array_walk_recursive",
 		"array_walk"
-	);
+	];
 
-	public function name()
+	public function getName()
 	{
 		return "phparraychangerhelper";
 	}
@@ -40,19 +40,17 @@ class PHPArrayChangerHelper implements HelperInterface {
 		foreach ($this->functions as $functionName)
 		{
 			$route = $this->convertPHPFunctionToRoute($functionName);
-			$closure = $this->createClosure($functionName);
-
-			$helperManager->addRoute($route, $closure);
+            $helperManager->addRoute($route, [__CLASS__, "execute"]);
 		}
 	}
 
-	public function createClosure($arrayMethodName)
-	{
-		return function($knot, $arguments) use ($arrayMethodName) {
-			$data =& $knot->toArray();
-			return call_user_func_array($arrayMethodName, array_merge(array(&$data), $arguments));
-		};
-	}
+    public static function execute($knot, $arguments, $methodName)
+    {
+        $methodName = self::convertRouteToPHPFunction($methodName);
+        $data =& $knot->toArray();
+
+        return call_user_func_array($methodName, array_merge([&$data], $arguments));
+    }
 
 	protected function convertPHPFunctionToRoute($phpFunctionName)
 	{
@@ -66,4 +64,17 @@ class PHPArrayChangerHelper implements HelperInterface {
 			$route
 		);
 	}
+
+    protected static function convertRouteToPHPFunction($route)
+    {
+        $right_side = preg_replace_callback(
+            '/([A-Z])/',
+            function($matches) {
+                return '_' . strtolower($matches[1]);
+            },
+            $route
+        );
+
+        return 'array_' . $right_side;
+    }
 }

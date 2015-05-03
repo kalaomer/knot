@@ -16,7 +16,7 @@ interface HelperInterface {
 	 * Helper code name.
 	 * @return string
 	 */
-	public function name();
+	public function getName();
 
 	/**
 	 * Load Function Routes!

@@ -9,7 +9,7 @@ use \Knot\Dict\HelperManager;
  */
 class PHPArrayEqualHelper implements HelperInterface {
 
-	public $functions = array(
+	public $functions = [
 		"array_change_key_case",
 		"array_chunk",
 		"array_combine",
@@ -38,9 +38,9 @@ class PHPArrayEqualHelper implements HelperInterface {
 		"array_uintersect_uassoc",
 		"array_uintersect",
 		"array_unique"
-	);
+	];
 
-	public function name()
+	public function getName()
 	{
 		return "phparrayequalhelper";
 	}
@@ -50,34 +50,45 @@ class PHPArrayEqualHelper implements HelperInterface {
 		foreach ($this->functions as $functionName)
 		{
 			$route = $this->convertPHPFunctionToRoute($functionName);
-			$closure = $this->createClosure($functionName);
-
-			$helperManager->addRoute($route, $closure);
+			$helperManager->addRoute($route, [__CLASS__, "execute"]);
 		}
 	}
 
-	public function createClosure($arrayMethodName)
-	{
-		return function($knot, $arguments) use ($arrayMethodName) {
-			$data =& $knot->toArray();
+    public static function execute($knot, $arguments, $methodName)
+    {
+        $methodName = self::convertRouteToPHPFunction($methodName);
+        $data =& $knot->toArray();
 
-			array_unshift($arguments, $data);
-			$data = call_user_func_array($arrayMethodName, $arguments);
 
-			return $knot;
-		};
-	}
+        array_unshift($arguments, $data);
+        $data = call_user_func_array($methodName, $arguments);
 
-	protected function convertPHPFunctionToRoute($phpFunctionName)
-	{
-		$route = ltrim($phpFunctionName, "array_");
+        return $knot;
+    }
 
-		return preg_replace_callback(
-			'/\_([a-z])/',
-			function($matches) {
-				return strtoupper($matches[1]);
-			},
-			$route
-		);
-	}
+    protected function convertPHPFunctionToRoute($phpFunctionName)
+    {
+        $route = ltrim($phpFunctionName, "array_");
+
+        return preg_replace_callback(
+            '/\_([a-z])/',
+            function($matches) {
+                return strtoupper($matches[1]);
+            },
+            $route
+        );
+    }
+
+    protected static function convertRouteToPHPFunction($route)
+    {
+        $right_side = preg_replace_callback(
+            '/([A-Z])/',
+            function($matches) {
+                return '_' . strtolower($matches[1]);
+            },
+            $route
+        );
+
+        return 'array_' . $right_side;
+    }
 }

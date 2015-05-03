@@ -50,7 +50,7 @@ class HelperManagerTest extends PHPUnit_Framework_TestCase {
 
 class SimpleHelper implements HelperInterface
 {
-	public function name()
+	public function getName()
 	{
 		return "simplehelper";
 	}

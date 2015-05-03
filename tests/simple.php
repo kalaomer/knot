@@ -13,18 +13,18 @@ PHPUnit_TextUI_Command::main();
 
 die();
 
-$obj = arr(array(
-    "foo" => array(
-        "sub" => array(
+$obj = arr([
+    "foo" => [
+        "sub" => [
             "vuu" => "uuuuvvv"
-        ),
+        ],
         "another" => "pff"
-    ),
-    "my" => array(
+    ],
+    "my" => [
         "name", "is", "Knot!"
-    ),
+    ],
     "string" => "info.."
-));
+]);
 
 $child = $obj->foo;
 

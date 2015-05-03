@@ -2,13 +2,23 @@
 
 namespace Knot\Dict;
 
+use ArrayAccess;
+use Countable;
+use IteratorAggregate;
+use ArrayIterator;
+
+use Knot\Exceptions\FunctionExecuteException;
 use \Knot\Exceptions\WrongFunctionException;
 use \Knot\Exceptions\WrongArrayPathException;
 
 /**
  * Main Knot class.
+ *
+ * @method $this merge
+ * @method $this unshift
+ * @method $this shift
  */
-abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggregate {
+abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate {
 
 	/**
 	 * For parsing array path.
@@ -75,6 +85,7 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 
 		if (is_array($target)) {
 			$r = new ChildDict($target, $this->childParent(), $this->path($key));
+
 			return $r;
 		}
 
@@ -82,71 +93,49 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 	}
 
 	/**
+     * Call callable data variable.
+     *
 	 * @param $method
-	 * @param $arguments
+	 * @param ...$arguments
 	 * @return mixed
 	 * @throws \Exception
 	 */
-	private function callDataFunction($method, $arguments)
+	public function call($method, $arguments)
 	{
-		if (!$this->keyExists($method) || !is_callable($f = $this->data[$method])) {
-			throw new WrongFunctionException("Wrong function name!");
+        $arguments = func_get_args();
+        $method = array_shift($arguments);
+
+        $function = $this->data[$method];
+
+		if (!$this->keyExists($method) || !is_callable($function)) {
+			throw new WrongFunctionException("Wrong function or not callable name!");
 		}
 
 		try {
-			$arguments = array_merge(array(&$this->data), $arguments);
-			return call_user_func_array($this->data[$method], $arguments);
+			$arguments = array_merge([&$this->data], $arguments);
+
+			return call_user_func_array($function, $arguments);
 		}
 		catch(\Exception $e) {
-			throw $e;
+			throw new FunctionExecuteException($method);
 		}
 	}
 
 	/**
-	 * @param $method
-	 * @param $arguments
-	 * @return mixed
-	 * @throws \Exception
-	 */
-	private function callHelperFunction($method, $arguments)
-	{
-		try{
-			return $this->getHelperManager()->execute($method, $arguments, $this);
-		}
-		catch(\Exception $e) {
-			throw $e;
-		}
-	}
-
-	/**
-	 * Function list: Callable Data + Helper Libraries!
+	 * Function list: Helper Libraries!
 	 * @param string $method
 	 * @param array $arguments
 	 * @return $this|mixed
 	 * @throws \Exception|WrongFunctionException
 	 */
-	public function __call($method, $arguments = array())
+	public function __call($method, $arguments = [])
 	{
-
-		// First try to call Data Function.
-		try {
-			return $this->callDataFunction($method, $arguments);
-		}
-		catch(WrongFunctionException $e) {
-
-		}
-		catch(\Exception $e) {
-			throw $e;
-		}
-
-		// Try to call Helper function.
-		try{
-			return $this->callHelperFunction($method, $arguments);
-		}
-		catch(\Exception $e) {
-			throw $e;
-		}
-
+        try{
+            return $this->getHelperManager()->execute($method, $arguments, $this);
+        }
+        catch(\Exception $e) {
+            throw $e;
+        }
 	}
 
 	/**
@@ -173,7 +162,7 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 	 */
 	public function __invoke($path)
 	{
-		return call_user_func_array(array($this, 'get'), func_get_args());
+		return call_user_func_array([$this, 'get'], func_get_args());
 	}
 
 	/**
@@ -197,6 +186,11 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 	 */
 	public function path($add = null)
 	{
+        $path_parts = $this->pathParser($this->path);
+        $path_parts[] = $add;
+
+        // return $this->pathCombiner($path_parts);
+
 		return $add
 			? $this->path != null
 				? $this->path . static::ARRAY_PATH_DELIMITER . $add
@@ -301,7 +295,7 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 	 *
 	 * @param $path
 	 * @return Mixed
-	 * @throws Exceptions\WrongArrayPathException
+	 * @throws WrongArrayPathException
 	 */
 	public function getOnly($path)
 	{
@@ -309,10 +303,12 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 
 		isset($arguments[1]) && $default_return = $arguments[1];
 
-		try	{
+		try
+        {
 			return $this->get($path);
 		}
-		catch(WrongArrayPathException $e) {
+		catch(WrongArrayPathException $e)
+        {
 			if (isset($default_return)) {
 				return $default_return;
 			}
@@ -331,9 +327,10 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 		$target_data =& $this->data;
 
 		foreach (static::pathParser($rawPath) as $path) {
-			// Eğer yol yok ise veya yol var ama array değilse!
-			if (!isset($target_data[$path]) || !is_array($target_data[$path])) {
-				$target_data[$path] = array();
+            // If there is no way to go or this is not an array!
+			if (!isset($target_data[$path]) || !is_array($target_data[$path]))
+            {
+				$target_data[$path] = [];
 			}
 
 			$target_data =& $target_data[$path];
@@ -341,7 +338,8 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 
 		$target_data = $value;
 
-		if (is_array($target_data)) {
+		if (is_array($target_data))
+        {
 			return new ChildDict($target_data, $this->childParent(), $this->path());
 		}
 
@@ -362,15 +360,17 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 		$target_key = array_pop($paths);
 
 		foreach ($paths as $path) {
-			// Eğer yol yok ise veya yol var ama array değilse!
-			if (!isset($target_data[$path]) || !is_array($target_data[$path])) {
+            // If there is no way to go or this is not an array!
+			if (!isset($target_data[$path]) || !is_array($target_data[$path]))
+            {
 				return $this;
 			}
 
 			$target_data =& $target_data[$path];
 		}
 
-		if (isset($target_data[$target_key])) {
+		if (isset($target_data[$target_key]))
+        {
 			unset($target_data[$target_key]);
 		}
 
@@ -400,10 +400,11 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 	public function &offsetGet($offset)
 	{
 		if (is_null($offset)) {
-			$this->data[] = array();
+			$this->data[] = [];
 
 			return $this->data[$this->lastKey()];
 		}
+
 		return $this->data[$offset];
 	}
 
@@ -414,7 +415,8 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 	 */
 	public function offsetSet($offset, $value)
 	{
-		if (is_null($offset)) {
+		if (is_null($offset))
+        {
 			$this->data[]= $value;
 		} else {
 			$this->data[$offset] = $value;
@@ -440,7 +442,7 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 	 */
 	public function count($mode = COUNT_NORMAL)
 	{
-		return \count($this->data, $mode);
+		return count($this->data, $mode);
 	}
 
 	/* ===============================================
@@ -448,6 +450,6 @@ abstract class AbstractBody implements \Arrayaccess, \Countable, \IteratorAggreg
 	 * IteratorAggregate Interface.
 	 */
 	public function getIterator() {
-        return new \ArrayIterator($this->data);
+        return new ArrayIterator($this->data);
     }
 }

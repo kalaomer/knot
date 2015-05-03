@@ -68,7 +68,7 @@ class ParentArrayTest extends PHPUnit_Framework_TestCase {
 			return $data["simple_data"] = $value;
 		};
 
-		$this->assertEquals("simple!", $obj->simple_function("simple!"));
+		$this->assertEquals("simple!", $obj->call("simple_function", "simple!"));
 	}
 
 	/**

@@ -6,7 +6,8 @@ class ParentDict extends AbstractBody {
 
 	public function kill()
 	{
-		$this->data = array();
+		$this->data = [];
+
 		return $this;
 	}
 

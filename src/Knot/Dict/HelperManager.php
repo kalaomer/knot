@@ -2,6 +2,7 @@
 
 namespace Knot\Dict;
 
+use Knot\Exceptions\FunctionExecuteException;
 use \Knot\Exceptions\WrongFunctionException;
 use \Knot\Dict\Helpers\HelperInterface;
 
@@ -15,12 +16,12 @@ class HelperManager {
 	/**
 	 * Helper list.
 	 */
-	private $helperList = array();
+	private $helperList = [];
 
 	/**
 	 * Functions Routes.
 	 */
-	private $functionRoutes = array();
+	private $functionRoutes = [];
 
 	/**
 	 * Return instance of Self!
@@ -48,7 +49,7 @@ class HelperManager {
 
 	/**
 	 * Add new functions to static function list.
-	 * @param $functioRoute
+	 * @param $functionRoute
 	 * @param Callable $function
 	 * @return false|Callable
 	 */
@@ -62,7 +63,6 @@ class HelperManager {
 	}
 
 	/**
-	 *
 	 * @param string $functionName
 	 *
 	 * @return true|false
@@ -80,7 +80,7 @@ class HelperManager {
 	 */
 	public function loadHelper(HelperInterface $helperObject)
 	{
-		$helperName = $helperObject->name();
+		$helperName = $helperObject->getName();
 		
 		if ($this->isHelper($helperName))
 		{
@@ -97,13 +97,19 @@ class HelperManager {
 	 * @param array $arguments
 	 * @param \Knot\ParentArray
 	 * @return mixed
+     * @throws WrongFunctionException|FunctionExecuteException
 	 */
 	public function execute($functionName, $arguments, $knot)
 	{
 		if ($this->isRoute($functionName))
 		{
 			$targetFunction = $this->getRoute($functionName);
-			return call_user_func($targetFunction, $knot, $arguments);
+
+                try {
+                    return call_user_func($targetFunction, $knot, $arguments, $functionName);
+                } catch(\Exception $e) {
+                    throw new FunctionExecuteException($functionName);
+                }
 		} else {
 			throw new WrongFunctionException($functionName);
 		}

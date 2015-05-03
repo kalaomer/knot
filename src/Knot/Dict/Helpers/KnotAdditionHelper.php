@@ -2,7 +2,7 @@
 
 namespace Knot\Helpers;
 
-use \Knot\ChildArray;
+use \Knot\Dict\AbstractBody as Knot;
 use \Knot\Exceptions\WrongArrayPathException;
 
 /*
@@ -17,7 +17,7 @@ class KnotAdditionHelper implements HelperInterface {
 		"last"
 	);
 
-	public function add($knot, $someVariable)
+	public function add(Knot $knot, $someVariable)
 	{
 		$arguments = func_get_args();
 

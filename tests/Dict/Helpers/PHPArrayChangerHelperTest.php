@@ -22,7 +22,7 @@ class PHPArrayChangerHelperTest extends PHPUnit_Framework_TestCase {
 		$obj = ar(2, 3);
 
 		$this->assertEquals(3, $obj->unshift(1));
-
+        
 		$this->assertEquals(array(1, 2, 3), $obj->toArray());
 	}
 }

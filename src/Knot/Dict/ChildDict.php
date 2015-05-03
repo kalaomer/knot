@@ -10,7 +10,7 @@ class ChildDict extends AbstractBody {
 	public function kill()
 	{
 		$this->parentArray->del($this->path());
-		$this->data = array();
+		$this->data = [];
 
 		return $this;
 	}

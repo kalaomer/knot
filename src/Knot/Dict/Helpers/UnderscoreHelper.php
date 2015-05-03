@@ -12,7 +12,7 @@ class UnderscoreHelper implements HelperInterface {
 
 	public $ready = false;
 
-	public $functions = array(
+	public $functions = [
 		"each",
 		"map",
 		"reduce",
@@ -86,7 +86,7 @@ class UnderscoreHelper implements HelperInterface {
 
 		"chain",
 		"value"
-	);
+	];
 	
 	public function __construct()
 	{
@@ -96,7 +96,7 @@ class UnderscoreHelper implements HelperInterface {
 		}		
 	}
 
-	public function name()
+	public function getName()
 	{
 		return 'underscore';
 	}
@@ -112,7 +112,8 @@ class UnderscoreHelper implements HelperInterface {
 	{
 		return function($knot, $arguments) use ($functionName) {
 			$underscoreObject = \__($knot->toArray());
-			$targetFunction = array($underscoreObject, $functionName);
+			$targetFunction = [$underscoreObject, $functionName];
+
 			return call_user_func_array($targetFunction, $arguments);
 		};
 	}

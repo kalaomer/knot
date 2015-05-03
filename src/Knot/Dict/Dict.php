@@ -35,7 +35,7 @@ class Dict
 	 *
 	 * @param array &$data Knot data
 	 *
-	 * @return \Knot\ParentArray
+	 * @return \Knot\Dict\ParentDict
 	 */
 	public static function createByReference(array &$data)
 	{
@@ -47,7 +47,7 @@ class Dict
 	 *
 	 * @param array $data Knot data
 	 *
-	 * @return \Knot\ParentArray
+	 * @return \Knot\Dict\ParentDict
 	 */
 	public static function create($data)
 	{

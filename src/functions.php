@@ -15,7 +15,7 @@
 /**
  * Essential EasyArray function.
  *
- * @return \Knot\ParentArray
+ * @return \Knot\Dict\ParentDict
  */
 function ar()
 {
@@ -27,7 +27,7 @@ function ar()
  *
  * @param array $array Knot data.
  *
- * @return \Knot\ParentArray
+ * @return \Knot\Dict\ParentDict
  */
 function arr(array $array)
 {
@@ -39,7 +39,7 @@ function arr(array $array)
  *
  * @param array &$array Knot data.
  *
- * @return \Knot\ParentArray
+ * @return \Knot\Dict\ParentDict
  */
 function arrRef(&$array)
 {

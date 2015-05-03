@@ -1,5 +1,6 @@
 <?php
 
+
 class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 
 	protected $objArray = array(
@@ -26,17 +27,16 @@ class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expectedException \Exception
+     * @dataProvider simpleObj
+	 * @expectedException Exception
 	 */
-	public function testCallDataCallable()
+	public function testCallDataCallable($obj)
 	{
-		$obj = ar();
-
-		$obj->function = function($a, $b) {
+		$obj->f = function($a, $b) {
 			
 		};
 
-		$obj->function();
+		$obj->f();
 	}
 
 	/**
@@ -50,13 +50,12 @@ class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expectedException \Exception
+     * @dataProvider simpleObj
+     * @expectedException \Knot\Exceptions\FunctionExecuteException
 	 */
-	public function testHelperFunction()
+	public function testHelperFunction($obj)
 	{
-		$obj = ar();
-
-		$obj->merge(1, 2, 3);
+        $obj->merge(1, 2, 3);
 	}
 
 	public function simpleObj()
