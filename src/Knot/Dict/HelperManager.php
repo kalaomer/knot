@@ -38,14 +38,22 @@ class HelperManager {
 
 	public function __construct()
 	{
-		$providerListContent = file_get_contents(__DIR__ . "/helpers.json");
-		$providerList = json_decode($providerListContent, true);
+		$baseHelpers = self::getBaseHelpers();
 		
 		// Load core helpers!
-		foreach ($providerList['providers'] as $helperObjectAddress) {
+		foreach ($baseHelpers as $helperObjectAddress) {
 			$this->loadHelper(new $helperObjectAddress($this));
 		}
 	}
+
+    public static function getBaseHelpers()
+    {
+        return [
+            "\\Knot\\Dict\\Helpers\\PHPArrayChangerHelper",
+            "\\Knot\\Dict\\Helpers\\PHPArrayEqualHelper",
+            "\\Knot\\Dict\\Helpers\\UnderscoreHelper"
+        ];
+    }
 
 	/**
 	 * Add new functions to static function list.
