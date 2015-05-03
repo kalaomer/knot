@@ -8,21 +8,13 @@
  * @package  Knot
  * @author   Ömer Kala <kalaomer@hotmail.com>
  * @license  https://raw.githubusercontent.com/kalaomer/knot/master/LICENSE.txt MIT licence
- * @version  GIT: $Id https://github.com/kalaomer/knot/
- * @link     https://github.com/kalaomer/knot/
+ * @version  GIT: $Id https://github.com/knot-php/knot/
+ * @link     https://knot-php.github.com/knot/
  */
 
 namespace Knot\Dict;
 
-/**
- * Knot class.
- *
- * @category PHP
- * @package  Knot
- * @author   Ömer Kala <kalaomer@hotmail.com>
- * @license  Release: Git
- * @link     https://github.com/kalaomer/knot/
- */
+
 class Dict
 {
 	/**
