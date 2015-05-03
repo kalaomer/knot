@@ -51,7 +51,9 @@
                 <div class="col-5">
                     <h2>Helpers</h2>
                     <ul>
-
+                        <li><a href="#PHPArrayChangerHelper">PHPArrayChangerHelper</a></li>
+                        <li><a href="#PHPArrayEqualHelper">PHPArrayEqualHelper</a></li>
+                        <li><a href="#UnderscoreHelper">UnderscoreHelper</a></li>
                     </ul>
                 </div>
                 <div class="col-5">
@@ -244,13 +246,89 @@ $knot->toArray();
                         <p></p>
                     </div>
 
-                    <h2 id="helpers">Helpers</h2>
-                    <p>Helpers are help to Knot for </p>
-
-                    <div id="helperManager">
+                    <div id="parent">
                         <div class="method">
-                            <h3></h3>
+                            <h3>$knot->parent()</h3>
                         </div>
+                        <p>If Knot object is child, then parent object will return parent Knot object.</p>
+                    </div>
+
+                    <h2 id="helpers">Helpers</h2>
+                    <p>Helpers are a very powerful way to include new functions to Knot. There are standard helpers for base
+                        <a href="http://php.net/manual/en/ref.array.php">PHP Array Functions</a>.</p>
+
+                    <div id="PHPArrayChangerHelper">
+                        <div class="method">
+                            <h3>PHPArrayChangerHelper</h3>
+                        </div>
+                        <p>This helpers includes which PHP Array functions change array content with references and returns their results or not returns new array. And there can be called without <code>array_</code> prefix and with camel case. PHPArrayChangerHelper is return array function's results.</p>
+                        <p>There are witch PHPArrayChangerHelper contains</p>
+                        <ul>
+                            <li>array_multisort</li>
+                            <li>array_pop</li>
+                            <li>array_product</li>
+                            <li>array_push</li>
+                            <li>array_rand</li>
+                            <li>array_reduce</li>
+                            <li>array_shift</li>
+                            <li>array_splice</li>
+                            <li>array_sum</li>
+                            <li>array_unshift</li>
+                            <li>array_walk_recursive</li>
+                            <li>array_walk</li>
+                        </ul>
+                    </div>
+
+                    <div id="PHPArrayEqualHelper">
+                        <div class="method">
+                            <h3>PHPArrayEqualHelper</h3>
+                        </div>
+                        <p>This helpers includes which PHP Array functions return a new array. And there can be called without <code>array_</code> prefix and with camel case. PHPArrayEqualHelper is return knot object for recursive usage.</p>
+                        <p>There are witch PHPArrayEqualHelper contains</p>
+                        <ul>
+                            <li>array_column</li>
+                            <li>array_count_values</li>
+                            <li>array_change_key_case</li>
+                            <li>array_chunk</li>
+                            <li>array_combine</li>
+                            <li>array_diff_assoc</li>
+                            <li>array_diff_key</li>
+                            <li>array_diff_uassoc</li>
+                            <li>array_diff_ukey</li>
+                            <li>array_diff</li>
+                            <li>array_fill_keys</li>
+                            <li>array_filter</li>
+                            <li>array_flip</li>
+                            <li>array_intersect_assoc</li>
+                            <li>array_intersect_key</li>
+                            <li>array_intersect_uassoc</li>
+                            <li>array_intersect_ukey</li>
+                            <li>array_intersect</li>
+                            <li>array_keys</li>
+                            <li>array_merge_recursive</li>
+                            <li>array_merge</li>
+                            <li>array_pad</li>
+                            <li>array_reverse</li>
+                            <li>array_replace_recursive</li>
+                            <li>array_replace</li>
+                            <li>array_slice</li>
+                            <li>array_udiff_assoc</li>
+                            <li>array_udiff_uassoc</li>
+                            <li>array_udiff</li>
+                            <li>array_uintersect_assoc</li>
+                            <li>array_uintersect_uassoc</li>
+                            <li>array_uintersect</li>
+                            <li>array_unique</li>
+                            <li>array_values</li>
+                        </ul>
+                    </div>
+
+                    <div id="UnderscoreHelper">
+                        <div class="method">
+                            <h3>UnderscoreHelper</h3>
+                        </div>
+                        <p><a href="http://brianhaveri.github.io/Underscore.php/">Underscore.php</a> is similar <a
+                                href="http://underscorejs.org/">underscore.js</a>. UnderscoreHelper is a way for user Underscores functions with Knot.</p>
                     </div>
                 </div>
 
@@ -258,6 +336,7 @@ $knot->toArray();
                     <ul id="fix-navigation" class="side-navigation">
                         <li><a href="#factories">factories</a></li>
                         <li><a href="#functions">functions</a></li>
+                        <li><a href="#helpers">helpers</a></li>
                     </ul>
                 </div>
             </div>

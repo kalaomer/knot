@@ -181,6 +181,14 @@ h1 {
 .documentation p {
     margin-bottom: 25px;
 }
+
+.documentation p code {
+    padding: 0.2em 0;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(0,0,0,0.04);
+    border-radius: 3px;
+}
 .documentation pre {
     font-size: 14px;
     border-left: 1px solid #a6afb2;
