@@ -4,9 +4,8 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5/badge.png)](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5)
 [![Latest Version](http://img.shields.io/github/tag/kalaomer/knot.svg)](https://github.com/kalaomer/knot/releases)
 [![Coverage Status](https://coveralls.io/repos/kalaomer/knot/badge.png)](https://coveralls.io/r/kalaomer/knot)
+[![Codeship Status](https://codeship.com/projects/77769/status?branch=master)]
 
-## Other README Files
-- [Türkçe Kılavuz](./README-TR.md)
 
 Knot is a very powerful tool for array. Knot help for using arrays like objects! And Knot have very rich function library.
 
@@ -37,64 +36,6 @@ Knot is available for Composer.
 ```
 
 Or download from [Github](https://github.com/kalaomer/knot/archive/master.zip).
-
-## Startup
-
-This is three ways for creating Knot object with easy way.
-
-### ar(...)
-
-This function create Knot data with sent arguments.
-
-Example:
-```
-$obj = ar(1,2,3);
-
-// Returns array(1,2,3)
-$obj->toArray();
-```
-
-### arr($array)
-
-This function use first Array argument for Knot data.
-
-Örnek:
-```
-$obj = arr(array(1,2,3,'a'=>4));
-
-// Returns array(1,2,3,'a'=>4)
-$obj->toArray();
-```
-
-### arrRef(&$array)
-
-This function likes arr() function. Different for using first argument reference for Knot data.
-
-## Using Knot Object
-
-```toArray``` functions using when convert Knot's data to Array.
-
-Example:
-```
-$obj = ar(1,2,3);
-
-// Returns array(1,2,3)
-$obj->toArray();
-```
-
-In addition, ```toArray``` gives reference to Knot's data.
-
-Example:
-```
-$obj = ar();
-
-$array =& $obj->toArray();
-
-$array["foo"] = 1;
-
-// Returns array("foo"=>1)
-$obj->toArray();
-```
 
 ### Use like Array
 
@@ -192,10 +133,6 @@ In addition, if target is an array, then Knot will return Knot Child for recursi
 
 ```del``` use same thing that ```get``` functions address usage. ```del``` delete targets.
 
-[... to be continued]
-
 ## Last
-
-PHP 5.3 not supported yet, but this will be fixed!
 
 Please contact me kalaomer@hotmail.com
