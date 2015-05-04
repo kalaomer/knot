@@ -1,9 +1,9 @@
 # Knot
 
-[![Build Status](https://travis-ci.org/knot-php/knot.svg?branch=v1.1.2)](https://travis-ci.org/knot-php/knot)
+[![Build Status](https://travis-ci.org/kalaomer/knot.svg?branch=v1.1.2)](https://travis-ci.org/kalaomer/knot)
 [![Dependency Status](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5/badge.png)](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5)
 [![Latest Version](http://img.shields.io/github/tag/kalaomer/knot.svg)](https://github.com/kalaomer/knot/releases)
-[![Coverage Status](https://coveralls.io/repos/knot-php/knot/badge.png)](https://coveralls.io/r/knot-php/knot)
+[![Coverage Status](https://coveralls.io/repos/kalaomer/knot/badge.png)](https://coveralls.io/r/kalaomer/knot)
 
 ## Other README Files
 - [Türkçe Kılavuz](./README-TR.md)
