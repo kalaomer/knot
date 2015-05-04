@@ -4,7 +4,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5/badge.png)](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5)
 [![Latest Version](http://img.shields.io/github/tag/kalaomer/knot.svg)](https://github.com/kalaomer/knot/releases)
 [![Coverage Status](https://coveralls.io/repos/kalaomer/knot/badge.png)](https://coveralls.io/r/kalaomer/knot)
-[![Codeship Status](https://codeship.com/projects/77769/status?branch=master)]
+[![Codeship Status](https://codeship.com/projects/750dea50-d457-0132-92b5-2a5ebe748396/status?branch=master)](https://codeship.com/projects/750dea50-d457-0132-92b5-2a5ebe748396/status?branch=master)
 
 
 Knot is a very powerful tool for array. Knot help for using arrays like objects! And Knot have very rich function library.
