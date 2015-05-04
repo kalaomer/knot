@@ -22,7 +22,7 @@
             </div>
 
             <div class="terminal" data-typer-targets="$knot->merge([1, 2, 3]);|$knot->shift();|$knot->unshift($variable);|$knot->get('come.here');|$knot->set('say.to.everyone', 'Hi!');|$knot->del('this.one');|$knot['foo'] = 'ooo';|$knot['set']['this'] = 'value';|$knot[ ][ ][ ] = 'value';|$knot->reverse()->last(3)->toArray();|$knot->call('callableVariable', $arguments);"></div>
-            <a href="https://github.com/knot-php/knot" class="button">View on GitHub</a>
+            <a href="https://github.com/kalaomer/knot" class="button">View on GitHub</a>
             <a href="#method-list" class="down-arrow"></a>
             <div id="method-list">
                 <div class="col-5">
@@ -51,7 +51,7 @@
                         <li><a href="#kill">kill</a></li>
                         <li><a href="#path">path</a></li>
                         <li><a href="#copy">copy</a></li>
-                        <li><a href="count">count</a></li>
+                        <li><a href="#count">count</a></li>
                     </ul>
                 </div>
                 <div class="col-5">
@@ -75,7 +75,11 @@
 
                         <pre>
                             <code>
-"kalaomer/knot": "*"
+{
+    "require": {
+        "kalaomer/knot": "v1.*"
+    }
+}
                             </code>
                         </pre>
                     </div>
@@ -235,9 +239,9 @@ $knot->toArray();
                     </div>
 
                     <div id="path">
-                        <method>
+                        <div class="method">
                             <h3>$knot->path()</h3>
-                        </method>
+                        </div>
                         <p>If Knot is child, returns path by father knot.</p>
                     </div>
 
