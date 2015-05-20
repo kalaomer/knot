@@ -12,11 +12,12 @@
  * @link     https://kalaomer.github.com/knot/
  */
 
-namespace Knot\Dict;
+namespace Knot;
+
+use Knot\Dict\ParentDict;
 
 
-class Dict
-{
+class Dict extends ParentDict {
 	/**
 	 * Version
 	 */

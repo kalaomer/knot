@@ -8,6 +8,8 @@
 
 require_once 'bootstrap.php';
 
+$knot = ar();
+
 // For debug mode!
 PHPUnit_TextUI_Command::main();
 

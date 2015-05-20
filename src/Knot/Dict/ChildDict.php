@@ -2,7 +2,9 @@
 
 namespace Knot\Dict;
 
-class ChildDict extends AbstractBody {
+use Knot\Dict;
+
+class ChildDict extends Dict {
 
 	/**
 	 * @return self

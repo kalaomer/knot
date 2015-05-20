@@ -7,18 +7,16 @@ use Countable;
 use IteratorAggregate;
 use ArrayIterator;
 
+use Knot\Dict\IDEHelper;
 use Knot\Exceptions\FunctionExecuteException;
-use \Knot\Exceptions\WrongFunctionException;
-use \Knot\Exceptions\WrongArrayPathException;
+use Knot\Exceptions\WrongFunctionException;
+use Knot\Exceptions\WrongArrayPathException;
+
 
 /**
  * Main Knot class.
- *
- * @method $this merge
- * @method $this unshift
- * @method $this shift
  */
-abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate {
+abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate, IDEHelper {
 
 	/**
 	 * For parsing array path.
@@ -77,13 +75,16 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	 */
 	public function &__get($key)
 	{
-		if (array_key_exists($key, $this->data)) {
+		if (array_key_exists($key, $this->data))
+        {
 			$target =& $this->data[$key];
-		} else {
+		} else
+        {
 			throw new WrongArrayPathException($key);
 		}
 
-		if (is_array($target)) {
+		if (is_array($target))
+        {
 			$r = new ChildDict($target, $this->childParent(), $this->path($key));
 
 			return $r;
@@ -107,7 +108,8 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 
         $function = $this->data[$method];
 
-		if (!$this->keyExists($method) || !is_callable($function)) {
+		if (!$this->keyExists($method) || !is_callable($function))
+        {
 			throw new WrongFunctionException("Wrong function or not callable name!");
 		}
 
@@ -130,7 +132,7 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	 */
 	public function __call($method, $arguments = [])
 	{
-        try{
+        try {
             return $this->getHelperManager()->execute($method, $arguments, $this);
         }
         catch(\Exception $e) {
@@ -186,11 +188,6 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	 */
 	public function path($add = null)
 	{
-        $path_parts = $this->pathParser($this->path);
-        $path_parts[] = $add;
-
-        // return $this->pathCombiner($path_parts);
-
 		return $add
 			? $this->path != null
 				? $this->path . static::ARRAY_PATH_DELIMITER . $add
@@ -222,6 +219,7 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	public function lastKey()
 	{
 		end($this->data);
+
 		return key($this->data);
 	}
 
@@ -236,6 +234,7 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	public function copy()
 	{
 		$_data = $this->data;
+
 		return new ParentDict($_data, null, '');
 	}
 
@@ -274,6 +273,7 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 
 				if (isset($default_return)) {
 					$r = $this->set($path, $default_return);
+
 					return $r;
 				}
 
@@ -283,7 +283,8 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 			$target_data = &$target_data[$way];
 		}
 
-		if (is_array($target_data))	{
+		if (is_array($target_data))
+        {
 			return new ChildDict($target_data, $this->childParent(), $path);
 		}
 
@@ -309,7 +310,8 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 		}
 		catch(WrongArrayPathException $e)
         {
-			if (isset($default_return)) {
+			if (isset($default_return))
+            {
 				return $default_return;
 			}
 
@@ -380,8 +382,6 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	/* ===============================================
 	 * ===============================================
 	 * Array Access Interface.
-	 *
-	 * Array Access ile direk data içindeki değer döndürülür.
 	 */
 
 	/**
@@ -399,7 +399,8 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	 */
 	public function &offsetGet($offset)
 	{
-		if (is_null($offset)) {
+		if (is_null($offset))
+        {
 			$this->data[] = [];
 
 			return $this->data[$this->lastKey()];
@@ -438,6 +439,7 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	 */
 
 	/**
+     * @param int $mode
 	 * @return int
 	 */
 	public function count($mode = COUNT_NORMAL)
@@ -449,7 +451,8 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	 * ===============================================
 	 * IteratorAggregate Interface.
 	 */
-	public function getIterator() {
+	public function getIterator()
+    {
         return new ArrayIterator($this->data);
     }
 }
