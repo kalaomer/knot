@@ -9,6 +9,10 @@
         <link rel="stylesheet" href="styles/normalize.css">
         <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="styles/main.css">
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -21,14 +25,15 @@
                 <h2>Modern Array object and more...</h2>
             </div>
 
-            <div class="terminal" data-typer-targets="$knot->merge([1, 2, 3]);|$knot->shift();|$knot->unshift($variable);|$knot->get('come.here');|$knot->set('say.to.everyone', 'Hi!');|$knot->del('this.one');|$knot['foo'] = 'ooo';|$knot['set']['this'] = 'value';|$knot[ ][ ][ ] = 'value';|$knot->reverse()->last(3)->toArray();|$knot->call('callableVariable', $arguments);"></div>
+            <div class="terminal" data-typer-targets="$knot->merge([1, 2, 3]);|$knot->shift();|$knot->unshift($variable);|$knot->get('come.here');|$knot->set('say.hello.to', 'Everyone!');|$knot->del('this.one');|$knot['foo'] = 'ooo';|$knot['set']['this'] = 'value';|$knot[ ][ ][ ] = 'value';|$knot->reverse()->last(3)->toArray();|$knot->call('callableVariable', $arguments);"></div>
             <a href="https://github.com/kalaomer/knot" class="button">View on GitHub</a>
             <a href="#method-list" class="down-arrow"></a>
             <div id="method-list">
                 <div class="col-5">
                     <h2>Main</h2>
                     <ul>
-                        <li></li>
+                        <li><a href="#install">Install</a></li>
+                        <li><a href="#simple-usage">Simple Usage</a></li>
                     </ul>
                 </div>
                 <div class="col-5">
@@ -62,10 +67,18 @@
                         <li><a href="#UnderscoreHelper">UnderscoreHelper</a></li>
                     </ul>
                 </div>
+                <div class="col-5">
+                    <h2>Interfaces</h2>
+                    <ul>
+                        <li><a href="#ArrayAccess">ArrayAccess</a></li>
+                        <li><a href="#Countable">Countable</a></li>
+                        <li><a href="#IteratorAggregate">IteratorAggregate</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="documentation">
                 <div class="col-7">
-                    <h2>Main</h2>
+                    <h2 id="main">Main</h2>
 
                     <div id="install">
                         <div class="method">
@@ -80,6 +93,62 @@
         "kalaomer/knot": "v1.*"
     }
 }
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="simple-usage">
+                        <div class="method">
+                            <h3>Simple Usage</h3>
+                        </div>
+
+                        <p>There are some examples.</p>
+
+                        <pre>
+                            <code>
+$knot = ar();
+// $knot equals knot which data is empty array
+
+$knot->foo = 'some value';
+// 'foo' key which value is 'some value' inserted to $knot's data.
+
+$knot->merge([1, 2, 3])->reverse();
+// $knot's data merged with [1, 2, 3] then reversed.
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="relations">
+                        <div class="method">
+                            <h3>Relations</h3>
+                        </div>
+
+                        <p>Knot objects has relations like father and child. If functions result is a piece of knot data which is an array, then result will be a child of main object. Child Data will be referenced to father's data with
+                            <a href="http://php.net/manual/en/language.references.whatare.php">PHP References</a>.</p>
+
+                        <pre>
+                            <code>
+$parent = arr(['child'=>[]]);
+
+$child = $parent->child;
+
+$child->sub = 'new value';
+// $father's data changed too.
+                            </code>
+                        </pre>
+
+                        <p>Child object has path value. This path is helpful when child need to be <a href="#kill">killed</a>.</p>
+                        <pre>
+                            <code>
+$child->path();
+// 'child'
+                            </code>
+                        </pre>
+
+                        <a href="#copy">Copy</a> function can use for crate knot without relations.
+                        <pre>
+                            <code>
+$newKnot = $parent->child->copy();
                             </code>
                         </pre>
                     </div>
@@ -144,10 +213,10 @@ $array = [1, 2, 3];
 
 $knot = arr($array);
 $knot->toArray();
-=> [1, 2, 3]
+// [1, 2, 3]
 
 $foo =& $knot->Array();
-=> returns $knot array references.
+// returns $knot array references.
                             </code>
                         </pre>
                     </div>
@@ -170,13 +239,13 @@ $array = [
 ];
 $knot = arr($array);
 $knot->get('one.two');
-=> return 'value'
+// return 'value'
 
 $knot->get('new.value', 'new value');
-=> return 'new value'
+// return 'new value'
 
 $knot->get('new.value');
-=> return 'new value' again
+// return 'new value' again
                             </code>
                         </pre>
                     </div>
@@ -219,7 +288,7 @@ $knot = arr($array);
 $knot->del('one.two');
 
 $knot->toArray();
-=> return []
+// return []
                             </code>
                         </pre>
                     </div>
@@ -350,18 +419,87 @@ $knot->toArray();
                         <p><a href="http://brianhaveri.github.io/Underscore.php/">Underscore.php</a> is similar <a
                                 href="http://underscorejs.org/">underscore.js</a>. UnderscoreHelper is a way for user Underscores functions with Knot.</p>
                     </div>
+
+                    <h2 id="interfaces">Interfaces</h2>
+                    <p>Knot object's interfaces.</p>
+
+                    <div id="ArrayAccess">
+                        <div class="method">
+                            <h3>ArrayAccess</h3>
+                        </div>
+
+                        <p>Knot can be used like normal array for get or set data.</p>
+
+                        <pre>
+                            <code>
+$knot = ar(1, 2, 3);
+$knot[] = 4;
+// Knot added 4 to last of knot's data.
+
+$knot[0];
+// 1
+
+$knot[1] = -1;
+// sets knot data's to -1 where key is 1
+
+$ref =  $knot[0];
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="Countable">
+                        <div class="method">
+                            <h3>Countable</h3>
+                        </div>
+
+                        <p>Knot can be use with <code>count()</code> function.</p>
+
+                        <p>WARNING: When <code>count($knot, COUNT_RECURESIVE)</code> is used, <code>COUNT_RECURESIVE</code> can't be used. Here it is some
+                            <a href="https://bugs.php.net/bug.php?id=58102&edit=3">information</a> about that. For <code>COUNT_RECURESIVE</code>, try
+                            <a href="#count">count</a> functions.</p>
+
+                        <pre>
+                            <code>
+$knot = ar(1, 2, 3);
+
+count($knot);
+// returns 3
+                            </code>
+                        </pre>
+                    </div>
+
+                    <div id="IteratorAggregate">
+                        <div class="method">
+                            <h3>IteratorAggregate</h3>
+                        </div>
+
+                        <p>Knot can be used with <code>foreach</code>.</p>
+
+                        <pre>
+                            <code>
+$knot = ar(1, 2, 3);
+
+foreach($knot as $key => $value)
+{
+    echo $key . '=>' . $value;
+}
+                            </code>
+                        </pre>
+                    </div>
                 </div>
 
                 <div class="col-3">
                     <ul id="fix-navigation" class="side-navigation">
+                        <li><a href="#main">main</a></li>
                         <li><a href="#factories">factories</a></li>
                         <li><a href="#functions">functions</a></li>
                         <li><a href="#helpers">helpers</a></li>
+                        <li><a href="#interfaces">interfaces</a></li>
                     </ul>
                 </div>
             </div>
             <h4 id="love">
-                <a href="https://www.youtube.com/watch?v=CHekNnySAfM" rel="nofollow">knot(<span>♥</span>);</a>
+                assembled with <span>♥</span>
             </h4>
         </div>
         <script src="scripts/jquery.min.js"></script>
