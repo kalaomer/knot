@@ -1,7 +1,7 @@
 {
     "name": "kalaomer/knot",
     "description": "Array Object for PHP",
-    "keywords": ["array", "tool"],
+    "keywords": ["array", "tool", "object"],
     "license": "MIT",
     "authors": [
         {
