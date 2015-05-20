@@ -1,12 +1,7 @@
-<?php
-/**
- * Underscore.php helper.
- */
+<?php namespace Knot\Dict\Helpers;
 
-namespace Knot\Dict\Helpers;
-
+use Knot\Dict;
 use Knot\Dict\HelperManager;
-
 
 class UnderscoreHelper implements HelperInterface {
 
@@ -33,7 +28,6 @@ class UnderscoreHelper implements HelperInterface {
 		"shuffle",
 		"toArray",
 		"size",
-
 		"first",
 		"initial",
 		"rest",
@@ -49,14 +43,12 @@ class UnderscoreHelper implements HelperInterface {
 		"indexOf",
 		"lastIndexOf",
 		"range",
-
 		"memoize",
 		"throttle",
 		"once",
 		"after",
 		"wrap",
 		"compose",
-
 		"keys",
 		"values",
 		"functions",
@@ -76,49 +68,51 @@ class UnderscoreHelper implements HelperInterface {
 		"isDate",
 		"isNaN",
 		"isNull",
-
 		"identity",
 		"times",
 		"mixin",
 		"uniqueId",
 		"escape",
 		"template",
-
 		"chain",
 		"value"
 	];
-	
+
+
 	public function __construct()
 	{
-		if(class_exists("__"))
+		if ( class_exists("__") )
 		{
 			$this->ready = true;
-		}		
+		}
 	}
+
 
 	public function getName()
 	{
 		return 'underscore';
 	}
 
+
 	public function addRoutes(HelperManager $helperManager)
 	{
-        // If underscore is not exists, don't add any routes to helper.
-        if ($this->ready === false)
-        {
-            return false;
-        }
-
-		foreach ($this->functions as $functionName) {
-			$helperManager->addRoute($functionName, $this->createClosure($functionName));
+		// If underscore is not exists, don't add any routes to helper.
+		if ( $this->ready === true )
+		{
+			foreach ($this->functions as $functionName)
+			{
+				$helperManager->addRoute($functionName, $this->createClosure($functionName));
+			}
 		}
 	}
 
+
 	public function createClosure($functionName)
 	{
-		return function($knot, $arguments) use ($functionName) {
+		return function (Dict $knot, $arguments) use ($functionName)
+		{
 			$underscoreObject = \__($knot->toArray());
-			$targetFunction = [$underscoreObject, $functionName];
+			$targetFunction   = [ $underscoreObject, $functionName ];
 
 			return call_user_func_array($targetFunction, $arguments);
 		};

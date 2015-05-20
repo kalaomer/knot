@@ -1,6 +1,4 @@
-<?php
-
-namespace Knot\Dict;
+<?php namespace Knot\Dict;
 
 use Knot\Dict;
 
@@ -12,10 +10,11 @@ class ChildDict extends Dict {
 	public function kill()
 	{
 		$this->parentArray->del($this->path());
-		$this->data = [];
+		$this->data = [ ];
 
 		return $this;
 	}
+
 
 	/**
 	 * @return self
@@ -24,6 +23,7 @@ class ChildDict extends Dict {
 	{
 		return $this->parentArray;
 	}
+
 
 	/**
 	 * In ChildArray's child's parent is parent array.

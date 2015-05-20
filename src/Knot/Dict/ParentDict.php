@@ -1,15 +1,14 @@
-<?php
-
-namespace Knot\Dict;
+<?php namespace Knot\Dict;
 
 class ParentDict extends AbstractBody {
 
 	public function kill()
 	{
-		$this->data = [];
+		$this->data = [ ];
 
 		return $this;
 	}
+
 
 	public function childParent()
 	{

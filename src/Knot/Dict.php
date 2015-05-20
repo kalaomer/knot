@@ -1,4 +1,5 @@
-<?php
+<?php namespace Knot;
+
 /**
  * Knot module.
  *
@@ -12,16 +13,15 @@
  * @link     https://kalaomer.github.com/knot/
  */
 
-namespace Knot;
-
 use Knot\Dict\ParentDict;
 
-
 class Dict extends ParentDict {
+
 	/**
 	 * Version
 	 */
 	const VERSION = "1.2";
+
 
 	/**
 	 * Create Knot by reference.
@@ -34,6 +34,7 @@ class Dict extends ParentDict {
 	{
 		return new ParentDict($data, null, '');
 	}
+
 
 	/**
 	 * Create Knot without reference.
