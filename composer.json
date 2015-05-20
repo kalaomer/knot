@@ -10,10 +10,10 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "underscore/underscore.php": "dev-master"
+        "php": ">=5.4.0"
     },
     "require-dev": {
+        "underscore/underscore.php": "dev-master",
         "phpunit/phpunit": "4.6.*",
         "squizlabs/php_codesniffer": "1.*",
         "satooshi/php-coveralls": "dev-master"

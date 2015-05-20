@@ -103,6 +103,12 @@ class UnderscoreHelper implements HelperInterface {
 
 	public function addRoutes(HelperManager $helperManager)
 	{
+        // If underscore is not exists, don't add any routes to helper.
+        if ($this->ready === false)
+        {
+            return false;
+        }
+
 		foreach ($this->functions as $functionName) {
 			$helperManager->addRoute($functionName, $this->createClosure($functionName));
 		}
