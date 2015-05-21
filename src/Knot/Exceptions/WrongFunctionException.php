@@ -1,6 +1,4 @@
-<?php
-
-namespace Knot\Exceptions;
+<?php namespace Knot\Exceptions;
 
 class WrongFunctionException extends \Exception {
 

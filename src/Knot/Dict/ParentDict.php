@@ -1,6 +1,6 @@
 <?php namespace Knot\Dict;
 
-class ParentDict extends AbstractBody {
+class ParentDict extends DictBody {
 
 	public function kill()
 	{

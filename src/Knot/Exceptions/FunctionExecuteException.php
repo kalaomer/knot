@@ -1,12 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: kalaomer
- * Date: 02.05.2015
- * Time: 22:00
- */
-
-namespace Knot\Exceptions;
+<?php namespace Knot\Exceptions;
 
 use Exception;
 

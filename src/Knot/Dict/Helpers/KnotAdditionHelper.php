@@ -1,6 +1,6 @@
 <?php namespace Knot\Helpers;
 
-use \Knot\Dict\AbstractBody as Knot;
+use Knot\Dict\DictBody;
 use Knot\Dict\HelperManager;
 use Knot\Dict\Helpers\HelperInterface;
 
@@ -26,11 +26,11 @@ class KnotAdditionHelper implements HelperInterface {
 
 	public function addRoutes(HelperManager $helperManager)
 	{
-
+		return false;
 	}
 
 
-	public function add(Knot $knot, $someVariable)
+	public function add(DictBody $knot, $someVariable)
 	{
 		$arguments = func_get_args();
 

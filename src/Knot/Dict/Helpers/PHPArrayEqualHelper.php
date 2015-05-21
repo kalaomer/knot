@@ -1,7 +1,7 @@
 <?php namespace Knot\Dict\Helpers;
 
-use Knot\Dict;
-use \Knot\Dict\HelperManager;
+use Knot\Dict\DictBody;
+use Knot\Dict\HelperManager;
 
 /*
  * This helper method's returns changed data.
@@ -63,7 +63,7 @@ class PHPArrayEqualHelper implements HelperInterface {
 	}
 
 
-	public static function execute(Dict $knot, $arguments, $methodName)
+	public static function execute(DictBody $knot, $arguments, $methodName)
 	{
 		$methodName = self::convertRouteToPHPFunction($methodName);
 		$data       =& $knot->toArray();

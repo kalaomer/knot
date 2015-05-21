@@ -1,6 +1,6 @@
 <?php namespace Knot\Dict\Helpers;
 
-use \Knot\Dict\HelperManager;
+use Knot\Dict\HelperManager;
 
 interface HelperInterface {
 

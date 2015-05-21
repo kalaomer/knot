@@ -1,19 +1,25 @@
 <?php namespace Knot\Dict;
 
 use ArrayAccess;
+use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use ArrayIterator;
-
-use Knot\Dict\IDEHelper;
 use Knot\Exceptions\FunctionExecuteException;
-use Knot\Exceptions\WrongFunctionException;
 use Knot\Exceptions\WrongArrayPathException;
+use Knot\Exceptions\WrongFunctionException;
 
 /**
- * Main Knot class.
+ * PHP ArrayEqualHelper methods
+ * @method $this merge( array $array1 = null, array $array2 = null, array $_ = null )
+ * @method $this reverse()
+ * @method $this values()
+ *
+ * PHP ArrayChangerHelper methods
+ * @method mixed shift()
+ * @method mixed unshift( mixed $variable )
+ * @method mixed push( mixed $variable )
  */
-abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate, IDEHelper {
+abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 
 	/**
 	 * For parsing array path.
@@ -27,7 +33,7 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	protected $data;
 
 	/**
-	 * @var self
+	 * @var DictBody
 	 */
 	protected $parentArray;
 
@@ -38,17 +44,15 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 
 
 	/**
-	 * In ParentArray's child's parent is self.
-	 * @return self
+	 * @return $this
 	 */
-	abstract public function childParent();
+	public abstract function kill();
 
 
 	/**
-	 * Reset data!
 	 * @return $this
 	 */
-	abstract public function kill();
+	public abstract function childParent();
 
 
 	/**
@@ -64,6 +68,10 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	}
 
 
+	/**
+	 * @param $key
+	 * @param $value
+	 */
 	public function __set($key, $value)
 	{
 		$this->data[$key] = $value;
@@ -192,7 +200,7 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	 *
 	 * @param mixed $key
 	 *
-	 * @return bool|false|true
+	 * @return bool
 	 */
 	public function keyExists($key)
 	{
@@ -200,6 +208,9 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	}
 
 
+	/**
+	 * @return HelperManager
+	 */
 	public function getHelperManager()
 	{
 		return HelperManager::getInstance();
@@ -259,6 +270,9 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	}
 
 
+	/**
+	 * @return ParentDict
+	 */
 	public function copy()
 	{
 		$_data = $this->data;
@@ -292,6 +306,12 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	}
 
 
+	/**
+	 * @param $path
+	 *
+	 * @return array|ChildDict|Mixed
+	 * @throws WrongArrayPathException
+	 */
 	public function get($path)
 	{
 		$arguments = func_get_args();
@@ -504,6 +524,9 @@ abstract class AbstractBody implements Arrayaccess, Countable, IteratorAggregate
 	/* ===============================================
 	 * ===============================================
 	 * IteratorAggregate Interface.
+	 */
+	/**
+	 * @return ArrayIterator
 	 */
 	public function getIterator()
 	{

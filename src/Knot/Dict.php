@@ -9,7 +9,7 @@
  * @package  Knot
  * @author   Ömer Kala <kalaomer@hotmail.com>
  * @license  https://raw.githubusercontent.com/kalaomer/knot/master/LICENSE.txt MIT licence
- * @version  GIT: $Id https://github.com/kalaomer/knot/
+ * @version  GIT: 1.3 https://github.com/kalaomer/knot/
  * @link     https://kalaomer.github.com/knot/
  */
 
@@ -20,7 +20,7 @@ class Dict extends ParentDict {
 	/**
 	 * Version
 	 */
-	const VERSION = "1.2";
+	const VERSION = "1.3";
 
 
 	/**

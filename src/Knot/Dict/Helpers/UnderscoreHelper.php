@@ -1,6 +1,6 @@
 <?php namespace Knot\Dict\Helpers;
 
-use Knot\Dict;
+use Knot\Dict\DictBody;
 use Knot\Dict\HelperManager;
 
 class UnderscoreHelper implements HelperInterface {
@@ -109,7 +109,7 @@ class UnderscoreHelper implements HelperInterface {
 
 	public function createClosure($functionName)
 	{
-		return function (Dict $knot, $arguments) use ($functionName)
+		return function (DictBody $knot, $arguments) use ($functionName)
 		{
 			$underscoreObject = \__($knot->toArray());
 			$targetFunction   = [ $underscoreObject, $functionName ];

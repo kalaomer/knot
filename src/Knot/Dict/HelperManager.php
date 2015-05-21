@@ -1,15 +1,15 @@
 <?php namespace Knot\Dict;
 
+use Knot\Dict\Helpers\HelperInterface;
 use Knot\Exceptions\FunctionExecuteException;
-use \Knot\Exceptions\WrongFunctionException;
-use \Knot\Dict\Helpers\HelperInterface;
+use Knot\Exceptions\WrongFunctionException;
 
 class HelperManager {
 
 	/**
 	 * Helper Manager Object.
 	 */
-	protected static $instance = false;
+	protected static $instance = null;
 
 	/**
 	 * Helper list.
@@ -80,7 +80,7 @@ class HelperManager {
 	/**
 	 * @param string $functionName
 	 *
-	 * @return true|false
+	 * @return bool
 	 */
 	public function isRoute($functionName)
 	{
