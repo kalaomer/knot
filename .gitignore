@@ -1,6 +1,8 @@
 /vendor/
 /vendor/*
 
+tests/simple.php
+
 /composer.lock
 
 /.idea/
