@@ -236,12 +236,12 @@ class ParentArrayTest extends PHPUnit_Framework_TestCase {
 
 	public function testStaticPathCombiner()
 	{
-		$this->assertEquals("foo.sub.way", \Knot\Dict\AbstractBody::pathCombiner(array("foo", "sub", "way")));
+		$this->assertEquals("foo.sub.way", \Knot\Dict::pathCombiner(array("foo", "sub", "way")));
 	}
 
 	public function testStaticPathParser()
 	{
-		$this->assertEquals(array("foo", "sub", "way"), \Knot\Dict\AbstractBody::pathParser("foo.sub.way"));
+		$this->assertEquals(array("foo", "sub", "way"), \Knot\Dict::pathParser("foo.sub.way"));
 	}
 
 	/**
