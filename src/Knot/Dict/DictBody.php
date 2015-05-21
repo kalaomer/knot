@@ -463,7 +463,7 @@ abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 	 *
 	 * @return mixed
 	 */
-	public function &offsetGet($offset)
+	public function &offsetGet($offset = null)
 	{
 		if ( is_null($offset) )
 		{
