@@ -52,7 +52,7 @@ class HelperManager {
 	{
 		return [
 			"\\Knot\\Dict\\Helpers\\PHPArrayChangerHelper",
-			"\\Knot\\Dict\\Helpers\\PHPArrayEqualHelper",
+			"\\Knot\\Dict\\Helpers\\PHPArrayEqualizerHelper",
 			"\\Knot\\Dict\\Helpers\\UnderscoreHelper"
 		];
 	}
