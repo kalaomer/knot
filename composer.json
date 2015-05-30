@@ -15,8 +15,9 @@
     "require-dev": {
         "underscore/underscore.php": "dev-master",
         "phpunit/phpunit": "4.6.*",
-        "squizlabs/php_codesniffer": "1.*",
-        "satooshi/php-coveralls": "dev-master"
+        "squizlabs/php_codesniffer": "2.*",
+        "satooshi/php-coveralls": "dev-master",
+        "pragmarx/laravelcs": "dev-master"
     },
     "autoload": {
         "psr-0": {
