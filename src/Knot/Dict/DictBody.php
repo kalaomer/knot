@@ -44,13 +44,13 @@ abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 
 
 	/**
-	 * @return $this
+	 * @return DictBody
 	 */
 	public abstract function kill();
 
 
 	/**
-	 * @return $this
+	 * @return DictBody
 	 */
 	public abstract function childParent();
 
