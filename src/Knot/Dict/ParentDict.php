@@ -9,9 +9,4 @@ class ParentDict extends DictBody {
 		return $this;
 	}
 
-
-	public function childParent()
-	{
-		return $this;
-	}
 }
