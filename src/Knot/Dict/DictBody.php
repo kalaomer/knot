@@ -109,17 +109,14 @@ abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 	/**
 	 * Call callable data variable.
 	 *
-	 * @param $method
-	 * @param ...$arguments
+	 * @param string $method
+	 * @param array  $arguments
 	 *
 	 * @return mixed
 	 * @throws \Exception
 	 */
-	public function call($method, $arguments)
+	public function call($method, array $arguments = [ ])
 	{
-		$arguments = func_get_args();
-		$method    = array_shift($arguments);
-
 		$function = $this->data[$method];
 
 		if ( ! $this->keyExists($method) || ! is_callable($function) )
