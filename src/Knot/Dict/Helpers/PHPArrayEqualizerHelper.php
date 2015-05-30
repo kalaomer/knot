@@ -7,7 +7,7 @@ use Knot\Dict\HelperManager;
  * This helper method's returns changed data.
  */
 
-class PHPArrayEqualHelper implements HelperInterface {
+class PHPArrayEqualizerHelper implements HelperInterface {
 
 	public $functions = [
 		"array_change_key_case",
