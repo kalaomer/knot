@@ -4,6 +4,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5/badge.png)](https://www.versioneye.com/user/projects/53530290fe0d079af90001d5)
 [![Latest Version](http://img.shields.io/github/tag/kalaomer/knot.svg)](https://github.com/kalaomer/knot/releases)
 [![Coverage Status](https://coveralls.io/repos/kalaomer/knot/badge.png)](https://coveralls.io/r/kalaomer/knot)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kalaomer/knot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kalaomer/knot/?branch=master)
 [![Codeship Status](https://codeship.com/projects/750dea50-d457-0132-92b5-2a5ebe748396/status?branch=master)](https://codeship.com/projects/750dea50-d457-0132-92b5-2a5ebe748396/status?branch=master)
 
 
