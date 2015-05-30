@@ -32,7 +32,7 @@ class Dict extends ParentDict {
 	 */
 	public static function createByReference(array &$data)
 	{
-		return new ParentDict($data, null, '');
+		return new ParentDict($data);
 	}
 
 
@@ -45,6 +45,6 @@ class Dict extends ParentDict {
 	 */
 	public static function create($data)
 	{
-		return new ParentDict($data, null, '');
+		return new ParentDict($data);
 	}
 }

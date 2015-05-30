@@ -19,7 +19,7 @@
  */
 function ar()
 {
-	return Knot\Dict::create(func_get_args(), null, '');
+	return Knot\Dict::create(func_get_args());
 }
 
 /**
@@ -31,7 +31,7 @@ function ar()
  */
 function arr(array $array)
 {
-	return Knot\Dict::create($array, null, '');
+	return Knot\Dict::create($array);
 }
 
 /**
@@ -43,5 +43,5 @@ function arr(array $array)
  */
 function arrRef(&$array)
 {
-	return Knot\Dict::createByReference($array, null, '');
+	return Knot\Dict::createByReference($array);
 }

@@ -56,15 +56,15 @@ abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 
 
 	/**
-	 * @param array $data
-	 * @param       $father
-	 * @param       $path
+	 * @param array      $data
+	 * @param ParentDict $parent
+	 * @param            $path
 	 */
-	public function __construct(array &$data, $father, $path)
+	public function __construct(array &$data, ParentDict $parent = null, $path = '')
 	{
 		$this->data        =& $data;
 		$this->path        = $path;
-		$this->parentArray = $father;
+		$this->parentArray = $parent;
 	}
 
 
@@ -188,7 +188,7 @@ abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 	 */
 	public function __invoke($path)
 	{
-		return call_user_func_array([ $this, 'get' ], func_get_args());
+		return $this->get($path);
 	}
 
 
