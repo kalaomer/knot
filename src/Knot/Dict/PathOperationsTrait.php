@@ -7,7 +7,7 @@ trait PathOperationsTrait {
 	/**
 	 * For parsing array path.
 	 */
-	static $ARRAY_PATH_DELIMITER = ".";
+	public static $ARRAY_PATH_DELIMITER = ".";
 
 	protected $data = [ ];
 
