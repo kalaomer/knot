@@ -24,7 +24,7 @@ trait PathOperationsTrait {
 	 */
 	public function path($add = null)
 	{
-		return $add ? $this->path != null ? $this->path . static::$ARRAY_PATH_DELIMITER . $add : $add : $this->path;
+		return $add ? $this->path != null ? $this->path . self::$ARRAY_PATH_DELIMITER . $add : $add : $this->path;
 	}
 
 
