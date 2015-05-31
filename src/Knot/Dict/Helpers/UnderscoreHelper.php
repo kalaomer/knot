@@ -1,5 +1,6 @@
 <?php namespace Knot\Dict\Helpers;
 
+use Knot\Dict;
 use Knot\Dict\AbstractDictBody;
 use Knot\Dict\HelperManager;
 
@@ -101,20 +102,19 @@ class UnderscoreHelper implements HelperInterface {
 		{
 			foreach ($this->functions as $functionName)
 			{
-				$helperManager->addRoute($functionName, $this->createClosure($functionName));
+				$helperManager->addRoute($functionName, [__CLASS__, "execute"]);
 			}
 		}
 	}
 
-
-	public function createClosure($functionName)
+	public function execute(Dict $knot, $arguments, $functionName)
 	{
-		return function (AbstractDictBody $knot, $arguments) use ($functionName)
-		{
-			$underscoreObject = \__($knot->toArray());
-			$targetFunction   = [ $underscoreObject, $functionName ];
+		$data = $knot->toArray();
 
-			return call_user_func_array($targetFunction, $arguments);
-		};
+		$underscoreObject = \__($data);
+		$targetFunction   = [ $underscoreObject, $functionName ];
+
+		return call_user_func_array($targetFunction, $arguments);
 	}
+
 }
