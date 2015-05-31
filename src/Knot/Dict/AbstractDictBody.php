@@ -18,7 +18,7 @@ use Knot\Exceptions\WrongFunctionException;
  * @method mixed unshift( mixed $variable )
  * @method mixed push( mixed $variable )
  */
-abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
+abstract class AbstractDictBody implements Arrayaccess, Countable, IteratorAggregate {
 
 	use ArrayAccessTrait, CountableTrait, IteratorAggregateTrait, PathOperationsTrait;
 
@@ -29,7 +29,7 @@ abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 	protected $data;
 
 	/**
-	 * @var DictBody
+	 * @var AbstractDictBody
 	 */
 	protected $parentArray;
 
@@ -40,17 +40,17 @@ abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 
 
 	/**
-	 * @return DictBody
+	 * @return AbstractDictBody
 	 */
 	abstract public function kill();
 
 
 	/**
 	 * @param array      $data
-	 * @param DictBody   $parent
+	 * @param AbstractDictBody   $parent
 	 * @param            $path
 	 */
-	public function __construct(array &$data, DictBody $parent = null, $path = '')
+	public function __construct(array &$data, AbstractDictBody $parent = null, $path = '')
 	{
 		$this->data        =& $data;
 		$this->path        = $path;
@@ -107,12 +107,12 @@ abstract class DictBody implements Arrayaccess, Countable, IteratorAggregate {
 	 */
 	public function call($method, array $arguments = [ ])
 	{
-		$function = $this->data[$method];
-
-		if ( ! $this->keyExists($method) || ! is_callable($function) )
+		if ( ! $this->keyExists($method) || ! is_callable($this->data[$method]) )
 		{
-			throw new WrongFunctionException("Wrong function or not callable name!");
+			throw new WrongFunctionException("Wrong function or not callable key!");
 		}
+
+		$function = $this->data[$method];
 
 		try
 		{

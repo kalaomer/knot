@@ -45,3 +45,13 @@ function arrRef(&$array)
 {
 	return Knot\Dict::createByReference($array);
 }
+
+/**
+ * @param mixed $instance
+ *
+ * @return bool
+ */
+function is_dict($instance)
+{
+	return $instance instanceof \Knot\Dict;
+}
