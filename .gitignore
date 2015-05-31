@@ -1,10 +1,9 @@
 /vendor/
-/vendor/*
+/tests/
 
 /composer.lock
 
 /.idea/
-/.idea/*
 
 /nbproject/
 /results/
