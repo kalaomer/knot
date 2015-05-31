@@ -1,12 +1,11 @@
 /vendor/
-/vendor/*
+/api/
 
 tests/simple.php
 
 /composer.lock
 
 /.idea/
-/.idea/*
 
 /nbproject/
 /results/
