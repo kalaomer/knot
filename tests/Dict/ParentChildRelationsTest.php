@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: kalaomer
  * Date: 4/22/14
  * Time: 1:00 PM
  */
-
 class ParentChildRelationsTest extends PHPUnit_Framework_TestCase {
 
 	public function testParent()
@@ -14,7 +14,7 @@ class ParentChildRelationsTest extends PHPUnit_Framework_TestCase {
 
 		$parent["child"] = array(
 			"new" => array(
-				"way" => array("foo")
+				"way" => array( "foo" )
 			)
 		);
 

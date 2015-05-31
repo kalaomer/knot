@@ -1,7 +1,7 @@
 <?php
 
-use \Knot\Dict\HelperManager;
-use \Knot\Dict\Helpers\HelperInterface;
+use Knot\Dict\HelperManager;
+use Knot\Dict\Helpers\HelperInterface;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -10,12 +10,13 @@ use \Knot\Dict\Helpers\HelperInterface;
  */
 
 class HelperManagerTest extends PHPUnit_Framework_TestCase {
-	
+
 	public function testConstruct()
 	{
 		$helper = new \Knot\Dict\HelperManager();
 		$this->assertAttributeNotEmpty('helperList', $helper);
 	}
+
 
 	public function testAddSimpleHelper()
 	{
@@ -30,6 +31,7 @@ class HelperManagerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals("simple result!", $knotObj->simpleFunction());
 	}
 
+
 	public function testAddCopyOfSimpleHelper()
 	{
 		$copyOfSimpleHelper = new CopyOfSimpleHelper();
@@ -41,36 +43,37 @@ class HelperManagerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(false, $helperManager->isRoute("simpleOtherFunction"));
 	}
 
+
 	public function getHelperManager()
 	{
 		return HelperManager::getInstance();
 	}
 }
 
+class SimpleHelper implements HelperInterface {
 
-class SimpleHelper implements HelperInterface
-{
 	public function getName()
 	{
 		return "simplehelper";
 	}
 
+
 	public function addRoutes(HelperManager $helperManager)
 	{
-		$helperManager->addRoute("simpleFunction", function($knot, $arguments)
-			{
-				return "simple result!";
-			});
+		$helperManager->addRoute("simpleFunction", function ($knot, $arguments)
+		{
+			return "simple result!";
+		});
 	}
 }
 
-class CopyOfSimpleHelper extends SimpleHelper
-{
+class CopyOfSimpleHelper extends SimpleHelper {
+
 	public function addRoutes(HelperManager $helperManager)
 	{
-		$helperManager->addRoute("simpleOtherFunction", function($knot, $arguments)
-			{
-				return "simple result!";
-			});
+		$helperManager->addRoute("simpleOtherFunction", function ($knot, $arguments)
+		{
+			return "simple result!";
+		});
 	}
 }

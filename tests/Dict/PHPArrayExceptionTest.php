@@ -1,22 +1,26 @@
 <?php
 
-
 class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 
 	protected $objArray = array(
-		1,2,3,
-		"foo" => array(
-			"sub" => array(
+		1,
+		2,
+		3,
+		"foo"    => array(
+			"sub"     => array(
 				"vuu" => "uuuuvvv"
 			),
 			"another" => "pff"
 		),
-		"my" => array(
-			"name", "is", "Knot!"
+		"my"     => array(
+			"name",
+			"is",
+			"Knot!"
 		),
 		"string" => "info.."
 	);
-	
+
+
 	/**
 	 * @dataProvider simpleObj
 	 * @expectedException \Knot\Exceptions\WrongArrayPathException
@@ -26,18 +30,21 @@ class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 		$obj->__get('asd');
 	}
 
+
 	/**
-     * @dataProvider simpleObj
+	 * @dataProvider simpleObj
 	 * @expectedException Exception
 	 */
 	public function testCallDataCallable($obj)
 	{
-		$obj->f = function($a, $b) {
-			
+		$obj->f = function ($a, $b)
+		{
+
 		};
 
 		$obj->f();
 	}
+
 
 	/**
 	 * @expectedException \Knot\Exceptions\WrongFunctionException
@@ -49,19 +56,21 @@ class PHPArrayExceptionTest extends PHPUnit_Framework_TestCase {
 		$obj->noway();
 	}
 
+
 	/**
-     * @dataProvider simpleObj
-     * @expectedException \Knot\Exceptions\FunctionExecuteException
+	 * @dataProvider simpleObj
+	 * @expectedException \Knot\Exceptions\FunctionExecuteException
 	 */
 	public function testHelperFunction($obj)
 	{
-        $obj->merge(1, 2, 3);
+		$obj->merge(1, 2, 3);
 	}
+
 
 	public function simpleObj()
 	{
 		return array(
-			array(arr($this->objArray))
+			array( arr($this->objArray) )
 		);
 	}
 }
