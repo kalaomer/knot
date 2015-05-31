@@ -22,7 +22,7 @@
             <div class="title">
                 <h1>$knot</h1>
 
-                <h2>Modern Array object and more...</h2>
+                <h2>Modern Array collection and more...</h2>
             </div>
 
             <div class="terminal" data-typer-targets="$knot->merge([1, 2, 3]);|$knot->shift();|$knot->unshift($variable);|$knot->get('come.here');|$knot->set('say.hello.to', 'Everyone!');|$knot->del('this.one');|$knot['foo'] = 'ooo';|$knot['set']['this'] = 'value';|$knot[ ][ ][ ] = 'value';|$knot->reverse()->last(3)->toArray();|$knot->call('callableVariable', $arguments);"></div>
@@ -42,6 +42,11 @@
                         <li><a href="#ar">ar</a></li>
                         <li><a href="#arr">arr</a></li>
                         <li><a href="#arrRef">arrRef</a></li>
+                    </ul>
+
+                    <h2>Is Helpers</h2>
+                    <ul>
+                        <li><a href="#is_dict">is_dict</a></li>
                     </ul>
                 </div>
                 <div class="col-5">
@@ -63,7 +68,7 @@
                     <h2>Helpers</h2>
                     <ul>
                         <li><a href="#PHPArrayChangerHelper">PHPArrayChangerHelper</a></li>
-                        <li><a href="#PHPArrayEqualHelper">PHPArrayEqualHelper</a></li>
+                        <li><a href="#PHPArrayEqualizerHelper">PHPArrayEqualizerHelper</a></li>
                         <li><a href="#UnderscoreHelper">UnderscoreHelper</a></li>
                     </ul>
                 </div>
@@ -196,6 +201,16 @@ $array = [1, 2, 3];
 $knot = arrRef($array);
                             </code>
                         </pre>
+                    </div>
+
+                    <h2 id="isHelpers">Is Helpers</h2>
+                    <p>Is helper functions for knot.</p>
+
+                    <div id="is_dict">
+                        <div class="method">
+                            <h3>is_dict(mixed $instance)</h3>
+                        </div>
+                        <p>This function checks Knot Dict instances.</p>
                     </div>
 
                     <h2 id="functions">Functions</h2>
@@ -368,12 +383,12 @@ $knot->toArray();
                         </ul>
                     </div>
 
-                    <div id="PHPArrayEqualHelper">
+                    <div id="PHPArrayEqualizerHelper">
                         <div class="method">
-                            <h3>PHPArrayEqualHelper</h3>
+                            <h3>PHPArrayEqualizerHelper</h3>
                         </div>
                         <p>This helpers includes which PHP Array functions return a new array. And there can be called without <code>array_</code> prefix and with camel case. PHPArrayEqualHelper is return knot object for recursive usage.</p>
-                        <p>There are witch PHPArrayEqualHelper contains</p>
+                        <p>There are witch PHPArrayEqualizerHelper contains</p>
                         <ul>
                             <li>array_column</li>
                             <li>array_count_values</li>
@@ -492,6 +507,7 @@ foreach($knot as $key => $value)
                     <ul id="fix-navigation" class="side-navigation">
                         <li><a href="#main">main</a></li>
                         <li><a href="#factories">factories</a></li>
+                        <li><a href="#isHelpers">is helpers</a></li>
                         <li><a href="#functions">functions</a></li>
                         <li><a href="#helpers">helpers</a></li>
                         <li><a href="#interfaces">interfaces</a></li>
