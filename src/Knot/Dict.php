@@ -13,9 +13,10 @@
  * @link     https://kalaomer.github.com/knot/
  */
 
+use Knot\Dict\AbstractDictBody;
 use Knot\Dict\ParentDict;
 
-class Dict extends ParentDict {
+abstract class Dict extends AbstractDictBody {
 
 	/**
 	 * Version

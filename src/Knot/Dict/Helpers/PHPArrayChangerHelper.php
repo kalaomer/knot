@@ -1,6 +1,6 @@
 <?php namespace Knot\Dict\Helpers;
 
-use Knot\Dict\DictBody;
+use Knot\Dict\AbstractDictBody;
 use Knot\Dict\HelperManager;
 
 /*
@@ -41,7 +41,7 @@ class PHPArrayChangerHelper extends AbstractPHPArrayHelper implements HelperInte
 	}
 
 
-	public static function execute(DictBody $knot, $arguments, $methodName)
+	public static function execute(AbstractDictBody $knot, $arguments, $methodName)
 	{
 		$methodName = self::convertRouteToPHPFunction($methodName);
 		$data       =& $knot->toArray();

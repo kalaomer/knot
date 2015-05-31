@@ -1,7 +1,16 @@
 <?php namespace Knot\Dict;
 
-class ParentDict extends DictBody {
+use Knot\Dict;
 
+/**
+ * Class ParentDict
+ * @package Knot\Dict
+ */
+class ParentDict extends Dict {
+
+	/**
+	 * @return $this
+	 */
 	public function kill()
 	{
 		$this->data = [ ];

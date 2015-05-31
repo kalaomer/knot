@@ -17,7 +17,7 @@ class ChildDict extends Dict {
 
 
 	/**
-	 * @return self
+	 * @return ParentDict
 	 */
 	public function parent()
 	{
@@ -27,7 +27,8 @@ class ChildDict extends Dict {
 
 	/**
 	 * In ChildArray's child's parent is parent array.
-	 * @return $this
+	 *
+	 * @return ParentDict
 	 */
 	public function childParent()
 	{
