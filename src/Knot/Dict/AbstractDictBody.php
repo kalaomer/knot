@@ -46,9 +46,9 @@ abstract class AbstractDictBody implements Arrayaccess, Countable, IteratorAggre
 
 
 	/**
-	 * @param array      $data
-	 * @param AbstractDictBody   $parent
-	 * @param            $path
+	 * @param array            $data
+	 * @param AbstractDictBody $parent
+	 * @param                  $path
 	 */
 	public function __construct(array &$data, AbstractDictBody $parent = null, $path = '')
 	{

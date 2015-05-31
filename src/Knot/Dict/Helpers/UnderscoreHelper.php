@@ -1,7 +1,6 @@
 <?php namespace Knot\Dict\Helpers;
 
 use Knot\Dict;
-use Knot\Dict\AbstractDictBody;
 use Knot\Dict\HelperManager;
 
 class UnderscoreHelper implements HelperInterface {
@@ -102,10 +101,11 @@ class UnderscoreHelper implements HelperInterface {
 		{
 			foreach ($this->functions as $functionName)
 			{
-				$helperManager->addRoute($functionName, [__CLASS__, "execute"]);
+				$helperManager->addRoute($functionName, [ __CLASS__, "execute" ]);
 			}
 		}
 	}
+
 
 	public function execute(Dict $knot, $arguments, $functionName)
 	{
