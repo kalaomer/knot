@@ -80,7 +80,10 @@ trait PathOperationsTrait {
 	{
 		$arguments = func_get_args();
 
-		isset( $arguments[1] ) && $default_return = $arguments[1];
+		if (isset($arguments[1]))
+		{
+			$default_return = $arguments[1];
+		}
 
 		$target_data =& $this->data;
 
@@ -124,7 +127,10 @@ trait PathOperationsTrait {
 	{
 		$arguments = func_get_args();
 
-		isset( $arguments[1] ) && $default_return = $arguments[1];
+		if (isset($arguments[1]))
+		{
+			$default_return = $arguments[1];
+		}
 
 		try
 		{
