@@ -11,7 +11,7 @@
 Knot is a very powerful tool for array. Knot help for using arrays like objects! And Knot have very rich function library.
 
 Simple Example;
-```
+```php
 $obj = ar(1,2,3);
 
 $obj->merge(array(3,3,4,5,6,7))->unique();
@@ -28,13 +28,8 @@ Knot is prepared with [PSR-0](http://www.php-fig.org/psr/psr-0/) and [PSR-1](htt
 ## Install
 
 Knot is available for Composer.
-```
-{
-    "require": {
-        "knot/knot": "v1.*"
-    }
-}
-```
+
+    composer require knot/knot
 
 Or download from [Github](https://github.com/kalaomer/knot/archive/master.zip).
 
@@ -43,7 +38,7 @@ Or download from [Github](https://github.com/kalaomer/knot/archive/master.zip).
 Knot object can be used like Arrays. Because Knot have [ArrayAccess](http://www.php.net/manual/en/class.arrayaccess.php) interface.
 
 Example:
-```
+```php
 $obj = ar();
 
 $obj["new"]["way"] = "new way value";
@@ -60,7 +55,7 @@ Also ```__get``` method can be access to Knot's data. But if target is an Array,
 Also ```__set``` functions can be changed to Knot's data.
 
 Example:
-```
+```php
 $obj = ar();
 
 $obj->new = array(
@@ -73,8 +68,8 @@ $obj->new->toArray();
 
 This is a point to take into consideration. If trying to setting nonexistent way, then Knot's data merged with stdClass objects.
 
-Examlpe:
-```
+Example:
+```php
 $obj = ar();
 
 $obj->new->way->foo = 1;
@@ -103,7 +98,7 @@ In this example's target is "sub" key of "foo" of Knot's data.
 Let's get target with this way.
 
 Example:
-```
+```php
 $obj = arr(array(
     "foo" => array(
         "sub" => array(
