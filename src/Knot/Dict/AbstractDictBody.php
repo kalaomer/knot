@@ -95,20 +95,20 @@ abstract class AbstractDictBody implements Arrayaccess, Countable, IteratorAggre
 	/**
 	 * Call callable data variable.
 	 *
-	 * @param string $method
+	 * @param string $methodPath
 	 * @param array  $arguments
 	 *
 	 * @return mixed
 	 * @throws \Exception
 	 */
-	public function call($method, array $arguments = [ ])
+	public function call($methodPath, array $arguments = [ ])
 	{
-		if ( ! $this->keyExists($method) || ! is_callable($this->data[$method]) )
+		$function = $this->get($methodPath, false);
+
+		if ( ! $function || ! is_callable($function) )
 		{
 			throw new WrongFunctionException("Wrong function or not callable key!");
 		}
-
-		$function = $this->data[$method];
 
 		try
 		{
@@ -118,7 +118,7 @@ abstract class AbstractDictBody implements Arrayaccess, Countable, IteratorAggre
 		}
 		catch (\Exception $e)
 		{
-			throw new FunctionExecuteException($method);
+			throw new FunctionExecuteException($methodPath);
 		}
 	}
 

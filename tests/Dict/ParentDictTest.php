@@ -72,12 +72,14 @@ class ParentArrayTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testMagicCallOwnFunction($obj)
 	{
-		$obj->simple_function = function (&$data, $value)
+		$closure = function (&$data, $value)
 		{
 			return $data["simple_data"] = $value;
 		};
 
-		$this->assertEquals("simple!", $obj->call("simple_function", [ "simple!" ]));
+		$obj["simple"]["function"] = $closure;
+
+		$this->assertEquals("simple!", $obj->call("simple.function", [ "simple!" ]));
 	}
 
 
