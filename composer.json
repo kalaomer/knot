@@ -1,7 +1,7 @@
 {
     "name": "knot/knot",
-    "description": "Array Object for PHP",
-    "keywords": ["array", "tool", "object"],
+    "description": "Modern Array collection for PHP",
+    "keywords": ["array", "tool", "object", "collection"],
     "license": "MIT",
     "authors": [
         {
