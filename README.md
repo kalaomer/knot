@@ -25,6 +25,10 @@ In this example, first Knot created and Knot's data have ```array(1,2,3)``` for 
 
 Knot is prepared with [PSR-0](http://www.php-fig.org/psr/psr-0/) and [PSR-1](http://www.php-fig.org/psr/psr-1/) standards.
 
+## Documentation
+
+Visit [documentation](https://kalaomer.github.io/knot) for more information.
+
 ## Install
 
 Knot is available for Composer.
@@ -77,7 +81,7 @@ $obj->new->way->foo = 1;
 
 In this example, $obj's data's ```new``` key is changed with stdClass object.
 
-## Functions
+## Base Functions
 
 Knot have many functions. Also It can be added new functions to Knot.
 
@@ -129,6 +133,6 @@ In addition, if target is an array, then Knot will return Knot Child for recursi
 
 ```del``` use same thing that ```get``` functions address usage. ```del``` delete targets.
 
-## Last
+## License
 
-Please contact me kalaomer@hotmail.com
+The Knot is open-sourced software licensed under the [MIT license](https://raw.githubusercontent.com/kalaomer/knot/master/LICENSE.txt).
