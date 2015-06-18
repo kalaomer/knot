@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+	"illuminate/contracts": "^5.0.0"
     },
     "require-dev": {
         "underscore/underscore.php": "dev-master",

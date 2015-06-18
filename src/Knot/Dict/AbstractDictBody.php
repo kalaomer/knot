@@ -2,6 +2,7 @@
 
 use ArrayAccess;
 use Countable;
+use Illuminate\Contracts\Support\Arrayable;
 use IteratorAggregate;
 use Knot\Exceptions\FunctionExecuteException;
 use Knot\Exceptions\WrongArrayPathException;
@@ -18,7 +19,7 @@ use Knot\Exceptions\WrongFunctionException;
  * @method mixed unshift( mixed $variable )
  * @method mixed push( mixed $variable )
  */
-abstract class AbstractDictBody implements Arrayaccess, Countable, IteratorAggregate {
+abstract class AbstractDictBody implements Arrayaccess, Countable, IteratorAggregate, Arrayable {
 
 	use ArrayAccessTrait, CountableTrait, IteratorAggregateTrait, PathOperationsTrait;
 
