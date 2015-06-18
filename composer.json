@@ -1,5 +1,5 @@
 {
-    "name": "kalaomer/knot",
+    "name": "knot/knot",
     "description": "Array Object for PHP",
     "keywords": ["array", "tool", "object"],
     "license": "MIT",
