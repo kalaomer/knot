@@ -9,6 +9,9 @@ trait PathOperationsTrait {
 	 */
 	public static $ARRAY_PATH_DELIMITER = ".";
 
+	/**
+	 * @var string
+	 */
 	protected $path = '';
 
 

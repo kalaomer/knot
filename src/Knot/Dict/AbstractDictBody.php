@@ -33,11 +33,6 @@ abstract class AbstractDictBody implements Arrayaccess, Countable, IteratorAggre
 	 */
 	protected $parentArray;
 
-	/**
-	 * @var string
-	 */
-	protected $path = '';
-
 
 	/**
 	 * @return AbstractDictBody
