@@ -23,6 +23,12 @@ abstract class AbstractDictBody implements Arrayaccess, Countable, IteratorAggre
 	use ArrayAccessTrait, CountableTrait, IteratorAggregateTrait, PathOperationsTrait;
 
 	/**
+	 * Knot data.
+	 * @var array
+	 */
+	protected $data;
+
+	/**
 	 * @var AbstractDictBody
 	 */
 	protected $parentArray;

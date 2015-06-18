@@ -2,9 +2,6 @@
 
 trait CountableTrait {
 
-	protected $data = [ ];
-
-
 	/**
 	 * @param int $mode
 	 *

@@ -9,8 +9,6 @@ trait PathOperationsTrait {
 	 */
 	public static $ARRAY_PATH_DELIMITER = ".";
 
-	protected $data = [ ];
-
 	protected $path = '';
 
 
@@ -129,7 +127,7 @@ trait PathOperationsTrait {
 
 		if ( isset( $arguments[1] ) )
 		{
-			$default_return = $arguments[1];
+			$value = $arguments[1];
 		}
 
 		try
@@ -138,9 +136,9 @@ trait PathOperationsTrait {
 		}
 		catch (WrongArrayPathException $e)
 		{
-			if ( isset( $default_return ) )
+			if ( isset( $value ) )
 			{
-				return $default_return;
+				return $this->value($value, [ $path ]);
 			}
 
 			throw $e;
@@ -168,6 +166,8 @@ trait PathOperationsTrait {
 
 			$target_data =& $target_data[$path];
 		}
+
+		$value = $this->value($value, [ $rawPath ]);
 
 		$target_data = $value;
 
@@ -210,5 +210,11 @@ trait PathOperationsTrait {
 		}
 
 		return $this;
+	}
+
+
+	protected function value($value, array $arguments = [ ])
+	{
+		return $value instanceof \Closure ? call_user_func_array($value, $arguments) : $value;
 	}
 }

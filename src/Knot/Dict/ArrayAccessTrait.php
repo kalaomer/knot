@@ -2,9 +2,6 @@
 
 trait ArrayAccessTrait {
 
-	protected $data = [ ];
-
-
 	abstract public function __unset($index);
 
 
