@@ -356,14 +356,26 @@ $knot->toArray();
                         <div class="method">
                             <h3>$knot->call(string $callableVariableName, [...arguments])</h3>
                         </div>
-                        <p></p>
+                        <p>If there is a callable variable in Knot's data, it can executed by call function.</p>
+                        <pre>
+                            <code>
+$knot = ar();
+
+$knot["simple"] = function($word) {
+    return "Hi " . $word;
+}
+
+$result = $knot->call("simple", "world!");
+// returns "Hi world!"
+                            </code>
+                        </pre>
                     </div>
 
                     <div id="parent">
                         <div class="method">
                             <h3>$knot->parent()</h3>
                         </div>
-                        <p>If Knot object is child, then parent object will return parent Knot object.</p>
+                        <p>If Knot object is child, then child object will return parent of Knot object.</p>
                     </div>
 
                     <h2 id="helpers">Helpers</h2>
