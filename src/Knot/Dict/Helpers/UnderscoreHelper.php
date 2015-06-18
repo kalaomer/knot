@@ -107,7 +107,7 @@ class UnderscoreHelper implements HelperInterface {
 	}
 
 
-	public function execute(Dict $knot, $arguments, $functionName)
+	public static function execute(Dict $knot, $arguments, $functionName)
 	{
 		$data = $knot->toArray();
 
