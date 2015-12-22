@@ -29,7 +29,7 @@ trait ArrayAccessTrait {
 	 */
 	public function &offsetGet($offset = null)
 	{
-		if ( is_null($offset) )
+		if ( count(func_get_args()) == 0 or is_null($offset) )
 		{
 			$this->data[] = [ ];
 
