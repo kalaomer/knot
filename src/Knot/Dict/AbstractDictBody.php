@@ -14,7 +14,6 @@ use Knot\Exceptions\WrongFunctionException;
  * @method $this reverse()
  * @method $this values()
  *
- * PHP ArrayChangerHelper methods
  * @method mixed shift()
  * @method mixed unshift( mixed $variable )
  * @method mixed push( mixed $variable )
